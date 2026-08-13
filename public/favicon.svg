@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="g1" x1="0" x2="1">
+      <stop offset="0%" stop-color="#FF8A4C"/>
+      <stop offset="100%" stop-color="#5EEAD4"/>
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" rx="18" fill="#0B0E14"/>
+  <g transform="translate(50,52)">
+    <path d="M-26 -18 L -6 26 L -6 -18 L 14 26 L 14 -18" fill="none" stroke="url(#g1)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="0" y="12" font-family="Space Grotesk,Inter,Arial" font-size="22" fill="#E9ECF1" font-weight="700" text-anchor="middle">MBI</text>
+  </g>
+</svg>

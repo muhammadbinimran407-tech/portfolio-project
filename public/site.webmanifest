@@ -1,0 +1,10 @@
+{
+  "name": "muhammadbinimran.online",
+  "short_name": "MBI",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ],
+  "theme_color": "#0B0E14",
+  "background_color": "#0B0E14",
+  "display": "standalone"
+}
