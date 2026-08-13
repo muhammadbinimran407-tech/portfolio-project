@@ -22,7 +22,42 @@ class ContactController extends Controller
      */
     public function index()
     {
-        return view('index');
+        $projects = Project::where('featured', true)
+            ->where('status', '!=', 'Draft')
+            ->orderBy('created_at', 'desc')
+            ->take(4)
+            ->get();
+
+        $testimonials = Testimonial::orderBy('created_at', 'desc')->take(4)->get();
+
+        $skillsCount = Skill::count();
+        $projectsCount = Project::where('status', '!=', 'Draft')->count();
+        $testimonialsCount = Testimonial::count();
+
+        return view('index', [
+            'projects' => $projects,
+            'testimonials' => $testimonials,
+            'stats' => [
+                'projects' => $projectsCount,
+                'years' => $this->yearsOfExperience(),
+                'skills' => $skillsCount,
+                'clients' => $testimonialsCount,
+            ],
+        ]);
+    }
+
+    private function yearsOfExperience(): int
+    {
+        $minYear = 0;
+        foreach (Experience::pluck('duration') as $duration) {
+            preg_match('/\b(19|20)\d{2}\b/', (string) $duration, $m);
+            $y = (int) ($m[0] ?? 0);
+            if ($y > 1900 && ($minYear === 0 || $y < $minYear)) {
+                $minYear = $y;
+            }
+        }
+
+        return $minYear ? max((int) date('Y') - $minYear, 1) : 1;
     }
 
     public function resume()
@@ -49,7 +84,8 @@ class ContactController extends Controller
 
     public function about()
     {
-        return view('about');
+        $experience = Experience::orderBy('created_at', 'asc')->get();
+        return view('about', ['experience' => $experience]);
     }
 
     public function skills()
@@ -66,12 +102,12 @@ class ContactController extends Controller
     public function services()
     {
         $experience = Experience::orderBy('created_at', 'desc')->get();
-        return view('services', ['experience' => $experience]);
+        return view('services', ['experience' => $experience, 'years' => $this->yearsOfExperience()]);
     }
 
     public function projects()
     {
-        $projects = Project::orderBy('created_at', 'desc')->get();
+        $projects = Project::where('status', '!=', 'Draft')->orderBy('created_at', 'desc')->get();
         return view('projects', ['projects' => $projects]);
     }
 

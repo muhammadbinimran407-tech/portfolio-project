@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-<title>Services — Muhammad Bin Imran</title>
-<meta name="description" content="Services offered by Muhammad Bin Imran — Laravel, Go, REST APIs, database design and deployment.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services — {{ \App\Support\Settings::get('site_name') }}</title>
+<meta name="description" content="Services offered by {{ \App\Support\Settings::get('site_name') }} — Laravel, Go, REST APIs, database design and deployment.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
@@ -88,7 +88,7 @@ nav .row{display:flex;align-items:center;justify-content:space-between;}
   .nav-links.desktop-only{display:none;}
   .hamburger{display:flex;}
 }
-@media(min-width:1025px){ #navHireDesktop{display:inline-flex !important;} }
+
 
 /* MOBILE DRAWER */
 #drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:598;opacity:0;pointer-events:none;transition:opacity .3s;}
@@ -141,6 +141,11 @@ nav .row{display:flex;align-items:center;justify-content:space-between;}
 /* PAGE HEADER (interior pages) */
 .page-header{padding:150px 0 60px;position:relative;overflow:hidden;}
 .page-header .grid-overlay{-webkit-mask-image:radial-gradient(ellipse 60% 100% at 30% 0%,#000 10%,transparent 70%);mask-image:radial-gradient(ellipse 60% 100% at 30% 0%,#000 10%,transparent 70%);}
+.page-header-highlights{display:grid;grid-template-columns:repeat(4,auto);gap:12px;margin-top:32px;justify-content:start;}
+@media(max-width:760px){.page-header-highlights{grid-template-columns:repeat(2,1fr);}}
+.highlight-chip{display:flex;flex-direction:column;gap:3px;padding:14px 18px;position:relative;z-index:2;}
+.highlight-chip .num{font-family:var(--f-display);font-size:22px;font-weight:600;}
+.highlight-chip .lbl{font-family:var(--f-mono);font-size:10.5px;letter-spacing:1.5px;color:var(--text-dim);}
 .breadcrumb{font-family:var(--f-mono);font-size:12px;color:var(--text-dim);margin-bottom:16px;}
 .breadcrumb a{color:var(--text-muted);} .breadcrumb a:hover{color:var(--accent);}
 .page-header h1{font-family:var(--f-display);font-size:clamp(32px,5vw,52px);font-weight:700;letter-spacing:-.02em;margin-bottom:14px;position:relative;z-index:2;}
@@ -243,7 +248,7 @@ nav .row{display:flex;align-items:center;justify-content:space-between;}
 .blog-meta{display:flex;justify-content:space-between;align-items:center;font-family:var(--f-mono);font-size:11px;color:var(--text-dim);}
 .blog-meta a{color:var(--accent-2);}
 .tag-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:44px;}
-.tag-pill{font-family:var(--f-mono);font-size:11.5px;padding:6px 13px;border-radius:20px;border:1px solid var(--border);color:var(--text-muted);}
+
 
 /* CONTACT */
 .contact-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:48px;}
@@ -288,6 +293,78 @@ footer{border-top:1px solid var(--border);padding:56px 0 30px;}
 #back-to-top.show{opacity:1;pointer-events:auto;}
 #back-to-top:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-3px);}
 @media(max-width:760px){#back-to-top{bottom:88px;}}
+/* MOBILE OPTIMIZATION */
+@media(max-width:760px){
+  body{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;}
+  .wrap{padding:0 20px;}
+  nav{padding:12px 0;}
+  .nav-right .btn.desktop-only{display:none !important;}
+  .logo{font-size:17px;}
+  .logo-img{width:24px;height:24px;}
+  .section-head{margin-bottom:40px;}
+  .section-head p{font-size:15px;}
+  #scroll-progress{height:3px;}
+  .page-header{padding:118px 0 44px;}
+  .page-header h1{font-size:clamp(28px,8.5vw,40px);}
+  .page-header p{font-size:15px;}
+  .scroll-cue{display:none;}
+  .btn{padding:13px 24px;min-height:46px;font-size:14.5px;}
+  .hero-actions{flex-direction:column;align-items:stretch;}
+  .hero-actions .btn{justify-content:center;}
+  #hero{padding-top:118px;}
+  .hero h1{font-size:clamp(34px,10vw,44px);margin:16px 0 14px;}
+  #typed-role{font-size:15px;min-height:24px;}
+  .hero p.desc{font-size:15.5px;margin-bottom:28px;}
+  .terminal-body{padding:16px;font-size:12.5px;line-height:1.9;}
+  .terminal-body .out{padding-left:12px;overflow-x:auto;white-space:nowrap;}
+  .glass:hover{transform:none;}
+  .avatar-wrap{max-width:240px;margin:0 auto;}
+  .about-grid{gap:36px;}
+  .stat-card{padding:16px 14px;}
+  .stat-card .num{font-size:26px;}
+  .service-card{padding:24px 20px;}
+  .filter-tabs{flex-wrap:nowrap;overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+  .filter-tabs::-webkit-scrollbar{display:none;}
+  .filter-tab{flex:none;}
+  .repo-body{padding:18px 18px 20px;}
+  .repo-actions{flex-direction:column;}
+  .repo-actions .btn{justify-content:center;}
+  .blog-toolbar{flex-direction:column;align-items:stretch;}
+  .search-box{max-width:none;}
+  .contact-info-card,.form-card{padding:24px 20px;}
+  .field input,.field textarea{font-size:16px;padding:14px 14px;}
+  .social-row a,.contact-item .ic,.theme-toggle,.hamburger,.page-btn{width:44px;height:44px;}
+  .footer-grid{grid-template-columns:1fr;gap:28px;}
+  .bottom-nav{left:12px;right:12px;padding:6px;}
+  .bn-item{font-size:10px;padding:8px 2px;}
+  #back-to-top{bottom:96px;right:16px;width:44px;height:44px;}
+  .commit-log{padding-left:28px;}
+  .commit::before{left:-28px;}
+  #drawer{width:100%;max-width:100%;padding-top:92px;}
+}
+@media(max-width:400px){
+  .stats-grid{gap:10px;}
+  .footer-bottom{flex-direction:column;justify-content:center;text-align:center;}
+  .hero-grid{gap:40px;}
+  .terminal-bar .path{display:none;}
+}
+/* HEAVY FX */
+section,footer{position:relative;z-index:1;}
+body::before,body::after{content:'';position:fixed;border-radius:50%;pointer-events:none;z-index:0;will-change:transform;}
+body::before{width:60vmax;height:60vmax;left:-20vmax;top:-20vmax;background:radial-gradient(circle,var(--accent-soft),transparent 65%);animation:orb-a 24s ease-in-out infinite alternate;}
+body::after{width:56vmax;height:56vmax;right:-18vmax;bottom:-18vmax;background:radial-gradient(circle,var(--accent-2-soft),transparent 65%);animation:orb-b 30s ease-in-out infinite alternate;}
+@keyframes orb-a{from{transform:translate(0,0) scale(1);}to{transform:translate(13vmax,9vmax) scale(1.3);}}
+@keyframes orb-b{from{transform:translate(0,0) scale(1);}to{transform:translate(-11vmax,-8vmax) scale(1.25);}}
+.repo-card,.service-card,.blog-card,.contact-info-card,.form-card,.stat-card{position:relative;}
+.repo-card::after,.service-card::after,.blog-card::after{content:'';position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .35s;background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--accent) 14%,transparent),transparent 70%);z-index:2;border-radius:inherit;}
+.repo-card:hover::after,.service-card:hover::after,.blog-card:hover::after{opacity:1;}
+.skill-bar i{background:linear-gradient(90deg,var(--accent),var(--accent-2),var(--accent));background-size:200% 100%;animation:bar-shimmer 3s linear infinite;}
+@keyframes bar-shimmer{to{background-position:-200% 0;}}
+.hero-grid > *{animation:hero-in .9s cubic-bezier(.22,1,.36,1) both;}
+.hero-grid > *:nth-child(2){animation-delay:.25s;}
+@keyframes hero-in{from{opacity:0;transform:translateY(26px);}to{opacity:1;transform:none;}}
+.repo-card:hover,.service-card:hover,.blog-card:hover{border-color:var(--border-strong);box-shadow:0 0 0 1px var(--border-strong),0 24px 60px -24px var(--accent-soft);}
+@media(hover:none){.repo-card::after,.service-card::after,.blog-card::after{display:none;}}
 @media(prefers-reduced-motion: reduce){*{animation-duration:.001ms !important;transition-duration:.001ms !important;}}
 </style>
 <link rel="stylesheet" href="/css/mobile-overrides.css">
@@ -348,12 +425,18 @@ footer{border-top:1px solid var(--border);padding:56px 0 30px;}
     <div class="breadcrumb"><a href="{{ route('index') }}">Home</a> / Services</div>
     <h1>Services</h1>
     <p>End-to-end delivery — from schema design to a deployed, monitored production app.</p>
+    <div class="page-header-highlights">
+      <div class="glass highlight-chip"><span class="num">{{ $years ?? count($experience ?? []) }}+</span><span class="lbl">YEARS EXPERIENCE</span></div>
+      <div class="glass highlight-chip"><span class="num">6</span><span class="lbl">SERVICES</span></div>
+      <div class="glass highlight-chip"><span class="num">3</span><span class="lbl">PRICING TIERS</span></div>
+      <div class="glass highlight-chip"><span class="num">Stripe</span><span class="lbl">ONLINE PAYMENT</span></div>
+    </div>
   </div>
 </section>
 
 <section id="services">
   <div class="wrap">
-    <div class="section-head" style="text-align:center;margin-left:auto;margin-right:auto;" data-aos="fade-up">
+    <div class="section-head" style="text-align:center;margin-left:auto;margin-right:auto;">
       <span class="eyebrow" style="justify-content:center;">./services</span>
       <h2>Laravel Services</h2>
       <p>Expert Laravel development — from a simple brochure site to a complex, data-heavy application with payments, dashboards and third-party integrations.</p>
@@ -389,7 +472,7 @@ footer{border-top:1px solid var(--border);padding:56px 0 30px;}
 
 <section id="pricing">
   <div class="wrap">
-    <div class="section-head" style="text-align:center;margin-left:auto;margin-right:auto;" data-aos="fade-up">
+    <div class="section-head" style="text-align:center;margin-left:auto;margin-right:auto;">
       <h2>Project Pricing</h2>
       <p>Transparent, fixed-price packages. Pay online securely with Stripe — or let's customise a scope that fits your budget.</p>
     </div>
@@ -405,7 +488,8 @@ footer{border-top:1px solid var(--border);padding:56px 0 30px;}
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>2 revisions</li>
         </ul>
         <div class="support-actions" style="flex-direction:column;">
-          <button type="button" class="btn btn-primary" data-pay="stripe" data-amount="299" data-title="Starter Website Package">Pay with Stripe</button>
+          <button type="button" class="btn btn-primary" data-pay="card" data-amount="299" data-title="Starter Website Package">Pay with Card</button>
+          <button type="button" class="btn btn-ghost" data-pay="stripe" data-amount="299" data-title="Starter Website Package">Pay with Stripe</button>
         </div>
       </div>
       <div class="glass pricing-card is-featured">
@@ -420,7 +504,8 @@ footer{border-top:1px solid var(--border);padding:56px 0 30px;}
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>6 revisions + 30 days support</li>
         </ul>
         <div class="support-actions" style="flex-direction:column;">
-          <button type="button" class="btn btn-primary" data-pay="stripe" data-amount="799" data-title="Professional Laravel Package">Pay with Stripe</button>
+          <button type="button" class="btn btn-primary" data-pay="card" data-amount="799" data-title="Professional Laravel Package">Pay with Card</button>
+          <button type="button" class="btn btn-ghost" data-pay="stripe" data-amount="799" data-title="Professional Laravel Package">Pay with Stripe</button>
         </div>
       </div>
       <div class="glass pricing-card">
@@ -442,7 +527,7 @@ footer{border-top:1px solid var(--border);padding:56px 0 30px;}
 <div id="stripeModal" class="stripe-modal">
   <div class="stripe-modal-card glass">
     <button type="button" id="stripeModalClose" class="stripe-modal-close" aria-label="Close">&times;</button>
-    <h3 class="stripe-modal-title" id="stripeModalTitle">Pay with Stripe</h3>
+    <h3 class="stripe-modal-title" id="stripeModalTitle">Pay with Card</h3>
     <p class="stripe-modal-amount" id="stripeModalAmount"><small>USD</small></p>
     <div id="stripePaymentElement"></div>
     <button type="button" id="stripePayBtn" class="btn btn-primary" disabled>Pay Now</button>
@@ -455,7 +540,7 @@ footer{border-top:1px solid var(--border);padding:56px 0 30px;}
     <div class="footer-grid">
       <div>
     <a href="{{ route('index') }}" class="logo"><img src="{{ asset('favicon.svg') }}" alt="MBI" class="logo-img">muhammadbinimran<span style="color:var(--text-dim);font-weight:500;">.online</span></a>
-        <p style="color:var(--text-muted);font-size:14px;margin-top:14px;max-width:280px;line-height:1.7;">Full stack web developer building reliable Laravel and Go systems.</p>
+        <p style="color:var(--text-muted);font-size:14px;margin-top:14px;max-width:280px;line-height:1.7;">{{ \App\Support\Settings::get('footer_bio') }}</p>
       </div>
       <div>
         <h4>Quick Links</h4>
@@ -480,7 +565,7 @@ footer{border-top:1px solid var(--border);padding:56px 0 30px;}
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Muhammad Bin Imran. All rights reserved.</span>
+      <span>{{ \App\Support\Settings::get('copyright') }}</span>
       <span class="mono" style="color:var(--text-dim);">Built with Laravel &amp; Tailwind CSS</span>
     </div>
   </div>
@@ -598,9 +683,55 @@ window.addEventListener('mousemove',e=>{
 
 AOS.init({duration:700, easing:'ease-out-cubic', once:true, offset:60});
 gsap.registerPlugin(ScrollTrigger);
+const phEl = document.querySelector('.page-header');
+if(phEl){
+  const ph = (s)=>phEl.querySelector(s);
+  const phBreadcrumb = ph('.breadcrumb'), phH1 = ph('h1'), phP = ph('p'), phChips = phEl.querySelectorAll('.highlight-chip');
+  if(phBreadcrumb) gsap.from(phBreadcrumb, {y:16, opacity:0, duration:.6, delay:.7, ease:'power3.out'});
+  if(phH1) gsap.from(phH1, {y:26, opacity:0, duration:.7, delay:.85, ease:'power3.out'});
+  if(phP) gsap.from(phP, {y:20, opacity:0, duration:.7, delay:1.0, ease:'power3.out'});
+  if(phChips.length) gsap.from(phChips, {y:18, opacity:0, duration:.6, delay:1.1, stagger:.08, ease:'power3.out'});
+}
 gsap.utils.toArray('.section-head').forEach(el=>{
   gsap.from(el, {y:30, opacity:0, duration:.8, ease:'power3.out', scrollTrigger:{trigger:el, start:'top 85%'}});
 });
+
+// ---- Heavy FX: 3D tilt, cursor spotlight, magnetic buttons ----
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce) return;
+  const fine = matchMedia('(hover:hover) and (pointer:fine)').matches;
+
+  const tiltEls = Array.from(document.querySelectorAll('.repo-card,.service-card,.blog-card,.contact-info-card,.form-card,.stat-card,.avatar-ring'));
+  tiltEls.forEach(card=>{
+    card.style.willChange='transform';
+    let raf=null;
+    const reset=()=>{ if(raf)cancelAnimationFrame(raf); card.style.transform=''; };
+    const move=e=>{
+      const r=card.getBoundingClientRect();
+      if(!r.width) return;
+      const px=(e.clientX-r.left)/r.width, py=(e.clientY-r.top)/r.height;
+      const rx=(0.5-py)*9, ry=(px-0.5)*9;
+      card.style.setProperty('--mx',(px*100)+'%');
+      card.style.setProperty('--my',(py*100)+'%');
+      if(raf)cancelAnimationFrame(raf);
+      raf=requestAnimationFrame(()=>{ card.style.transform=`perspective(900px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translateY(-4px)`; });
+    };
+    if(fine){ card.addEventListener('mousemove',move); card.addEventListener('mouseleave',reset); }
+  });
+
+  if(fine){
+    const btns=Array.from(document.querySelectorAll('.btn,.filter-tab,.theme-toggle'));
+    btns.forEach(b=>{
+      b.addEventListener('mousemove',e=>{
+        const r=b.getBoundingClientRect();
+        const dx=(e.clientX-r.left-r.width/2)/7, dy=(e.clientY-r.top-r.height/2)/7;
+        b.style.transform=`translate(${dx.toFixed(2)}px,${dy.toFixed(2)}px)`;
+      });
+      b.addEventListener('mouseleave',()=>{ b.style.transform=''; });
+    });
+  }
+})();
 
 // ---- Stripe inline payment (Payment Element) ----
 (function(){
@@ -627,7 +758,7 @@ gsap.utils.toArray('.section-head').forEach(el=>{
     payBtn.textContent = 'Pay Now';
   }
 
-  document.querySelectorAll('#pricing [data-pay="stripe"]').forEach(btn=>{
+  document.querySelectorAll('#pricing [data-pay="card"]').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       const title = btn.getAttribute('data-title') || 'Development Package';
       const usd = parseFloat(btn.getAttribute('data-amount')) || 299;
@@ -687,6 +818,29 @@ gsap.utils.toArray('.section-head').forEach(el=>{
   closeBtn.addEventListener('click', closeModal);
   modal.addEventListener('click', e => { if(e.target === modal) closeModal(); });
 })();
+
+// ---- Stripe Checkout redirect (pricing cards) ----
+document.querySelectorAll('#pricing [data-pay="stripe"]').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    btn.disabled = true;
+    btn.textContent = 'Redirecting…';
+    const title = btn.getAttribute('data-title') || 'Development Package';
+    const usd = parseFloat(btn.getAttribute('data-amount')) || 299;
+    fetch('{{ route('payment.stripe') }}', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json','Accept':'application/json','X-CSRF-TOKEN':'{{ csrf_token() }}'},
+      body: JSON.stringify({amount: usd, title: title})
+    })
+    .then(r=>r.json().then(d=>({ok:r.ok, d})))
+    .then(res=>{
+      btn.disabled = false;
+      btn.textContent = 'Pay with Stripe';
+      if(res.ok && res.d.url){ window.location.href = res.d.url; }
+      else { alert(res.d.error || 'Payment could not be started.'); }
+    })
+    .catch(()=>{ btn.disabled = false; btn.textContent = 'Pay with Stripe'; alert('Network error. Please try again.'); });
+  });
+});
 
 </script>
 </body>

@@ -10,6 +10,8 @@ use App\Models\Skill;
 use App\Models\Experience;
 use App\Models\Testimonial;
 use App\Models\Post;
+use App\Models\Subscriber;
+use App\Support\Settings;
 use Illuminate\Support\Facades\Log;
 
 class AdminApiController extends Controller
@@ -40,6 +42,16 @@ class AdminApiController extends Controller
     {
         $e = strtolower($entity);
 
+        // stats: real dashboard KPIs
+        if ($e === 'stats') {
+            return $this->stats();
+        }
+
+        // settings: single JSON-backed object
+        if ($e === 'settings') {
+            return response()->json(Settings::all());
+        }
+
         // media: list uploaded files
         if ($e === 'media') {
             $dir = storage_path('app/public/admin_media');
@@ -65,9 +77,10 @@ class AdminApiController extends Controller
                     'id' => $r->id,
                     'name' => $r->name,
                     'email' => $r->email,
+                    'subject' => $r->subject,
                     'message' => $r->message,
                     'date' => $r->created_at ? $r->created_at->format('M j, Y') : null,
-                    'read' => $r->read ?? false,
+                    'read' => (bool) $r->read,
                 ])->toArray();
                 return response()->json($data);
             } catch (\Throwable $e) {
@@ -83,6 +96,7 @@ class AdminApiController extends Controller
             'testimonials' => Testimonial::class,
             'blog' => Post::class,
             'posts' => Post::class,
+            'subscribers' => Subscriber::class,
         ];
         if (isset($map[$e])) {
             $cls = $map[$e];
@@ -95,10 +109,57 @@ class AdminApiController extends Controller
         return response()->json($data);
     }
 
+    protected function stats()
+    {
+        $mediaDir = storage_path('app/public/admin_media');
+        $mediaCount = is_dir($mediaDir) ? count(array_diff(scandir($mediaDir), ['.', '..'])) : 0;
+
+        $unread = Contact::where('read', false)->count();
+        $total = Contact::count();
+
+        $labels = [];
+        $counts = [];
+        for ($i = 6; $i >= 0; $i--) {
+            $day = now()->subDays($i);
+            $labels[] = $day->format('D');
+            $counts[] = Contact::whereDate('created_at', $day->toDateString())->count();
+        }
+
+        $recentMessages = Contact::orderBy('created_at', 'desc')->take(5)->get()->map(fn($r) => [
+            'id' => $r->id,
+            'name' => $r->name,
+            'email' => $r->email,
+            'subject' => $r->subject,
+            'message' => $r->message,
+            'date' => $r->created_at ? $r->created_at->format('M j, Y') : null,
+            'read' => (bool) $r->read,
+        ])->toArray();
+
+        return response()->json([
+            'projects' => Project::count(),
+            'skills' => Skill::count(),
+            'experience' => Experience::count(),
+            'testimonials' => Testimonial::count(),
+            'blog' => Post::count(),
+            'messages' => $total,
+            'unread' => $unread,
+            'subscribers' => Subscriber::count(),
+            'media' => $mediaCount,
+            'featured' => Project::where('featured', true)->count(),
+            'chart' => ['labels' => $labels, 'counts' => $counts],
+            'recent_messages' => $recentMessages,
+        ]);
+    }
+
     public function store(Request $request, $entity)
     {
         $payload = $request->all();
         $e = strtolower($entity);
+
+        // settings
+        if ($e === 'settings') {
+            return response()->json(Settings::set($payload), 200);
+        }
 
         // media upload handling
         if ($e === 'media') {
@@ -125,15 +186,17 @@ class AdminApiController extends Controller
             $contact = Contact::create([
                 'name' => $payload['name'] ?? 'Unknown',
                 'email' => $payload['email'] ?? null,
+                'subject' => $payload['subject'] ?? '',
                 'message' => $payload['message'] ?? '',
             ]);
             return response()->json([
                 'id' => $contact->id,
                 'name' => $contact->name,
                 'email' => $contact->email,
+                'subject' => $contact->subject,
                 'message' => $contact->message,
                 'date' => $contact->created_at ? $contact->created_at->format('M j, Y') : null,
-                'read' => $contact->read ?? false,
+                'read' => (bool) $contact->read,
             ], 201);
         }
 
@@ -145,6 +208,7 @@ class AdminApiController extends Controller
             'testimonials' => Testimonial::class,
             'blog' => Post::class,
             'posts' => Post::class,
+            'subscribers' => Subscriber::class,
         ];
         if (isset($map[$e])) {
             $cls = $map[$e];
@@ -164,19 +228,29 @@ class AdminApiController extends Controller
     public function update(Request $request, $entity, $id)
     {
         $e = strtolower($entity);
+        if ($e === 'settings') {
+            return response()->json(Settings::set($request->all()));
+        }
         // messages
         if ($e === 'messages') {
             $contact = Contact::find($id);
             if (!$contact) return response()->json(['message' => 'Not found'], 404);
-            $contact->fill($request->all());
+            if ($request->has('read')) {
+                $contact->read = filter_var($request->input('read'), FILTER_VALIDATE_BOOLEAN);
+            }
+            if ($request->has('name')) $contact->name = $request->input('name');
+            if ($request->has('email')) $contact->email = $request->input('email');
+            if ($request->has('subject')) $contact->subject = $request->input('subject');
+            if ($request->has('message')) $contact->message = $request->input('message');
             $contact->save();
             return response()->json([
                 'id' => $contact->id,
                 'name' => $contact->name,
                 'email' => $contact->email,
+                'subject' => $contact->subject,
                 'message' => $contact->message,
                 'date' => $contact->created_at ? $contact->created_at->format('M j, Y') : null,
-                'read' => $contact->read ?? false,
+                'read' => (bool) $contact->read,
             ]);
         }
 
@@ -187,6 +261,7 @@ class AdminApiController extends Controller
             'testimonials' => Testimonial::class,
             'blog' => Post::class,
             'posts' => Post::class,
+            'subscribers' => Subscriber::class,
         ];
         if (isset($map[$e])) {
             $cls = $map[$e];
@@ -235,6 +310,7 @@ class AdminApiController extends Controller
             'testimonials' => Testimonial::class,
             'blog' => Post::class,
             'posts' => Post::class,
+            'subscribers' => Subscriber::class,
         ];
         if (isset($map[$e])) {
             $cls = $map[$e];

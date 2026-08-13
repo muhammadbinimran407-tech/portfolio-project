@@ -45,6 +45,10 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(
 
 // Admin API (model/file-backed CRUD, protected by admin session)
 Route::prefix('admin/api')->middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(function () {
+	Route::get('stats', [AdminApiController::class, 'index']);
+	Route::get('settings', [AdminApiController::class, 'index']);
+	Route::put('settings', [AdminApiController::class, 'update']);
+	Route::post('settings', [AdminApiController::class, 'store']);
 	Route::get('{entity}', [AdminApiController::class, 'index']);
 	Route::post('{entity}', [AdminApiController::class, 'store']);
 	Route::put('{entity}/{id}', [AdminApiController::class, 'update']);

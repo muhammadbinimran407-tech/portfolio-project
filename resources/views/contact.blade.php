@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-<title>Contact — Muhammad Bin Imran</title>
-<meta name="description" content="Get in touch with Muhammad Bin Imran for Laravel, Go and full stack development work.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — {{ \App\Support\Settings::get('site_name') }}</title>
+<meta name="description" content="Get in touch with {{ \App\Support\Settings::get('site_name') }} for Laravel, Go and full stack development work.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
@@ -88,7 +88,7 @@ nav .row{display:flex;align-items:center;justify-content:space-between;}
   .nav-links.desktop-only{display:none;}
   .hamburger{display:flex;}
 }
-@media(min-width:1025px){ #navHireDesktop{display:inline-flex !important;} }
+
 
 /* MOBILE DRAWER */
 #drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:598;opacity:0;pointer-events:none;transition:opacity .3s;}
@@ -244,7 +244,7 @@ nav .row{display:flex;align-items:center;justify-content:space-between;}
 .blog-meta{display:flex;justify-content:space-between;align-items:center;font-family:var(--f-mono);font-size:11px;color:var(--text-dim);}
 .blog-meta a{color:var(--accent-2);}
 .tag-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:44px;}
-.tag-pill{font-family:var(--f-mono);font-size:11.5px;padding:6px 13px;border-radius:20px;border:1px solid var(--border);color:var(--text-muted);}
+
 
 /* CONTACT */
 .contact-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:48px;}
@@ -290,6 +290,78 @@ footer{border-top:1px solid var(--border);padding:56px 0 30px;}
 #back-to-top.show{opacity:1;pointer-events:auto;}
 #back-to-top:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-3px);}
 @media(max-width:760px){#back-to-top{bottom:88px;}}
+/* MOBILE OPTIMIZATION */
+@media(max-width:760px){
+  body{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;}
+  .wrap{padding:0 20px;}
+  nav{padding:12px 0;}
+  .nav-right .btn.desktop-only{display:none !important;}
+  .logo{font-size:17px;}
+  .logo-img{width:24px;height:24px;}
+  .section-head{margin-bottom:40px;}
+  .section-head p{font-size:15px;}
+  #scroll-progress{height:3px;}
+  .page-header{padding:118px 0 44px;}
+  .page-header h1{font-size:clamp(28px,8.5vw,40px);}
+  .page-header p{font-size:15px;}
+  .scroll-cue{display:none;}
+  .btn{padding:13px 24px;min-height:46px;font-size:14.5px;}
+  .hero-actions{flex-direction:column;align-items:stretch;}
+  .hero-actions .btn{justify-content:center;}
+  #hero{padding-top:118px;}
+  .hero h1{font-size:clamp(34px,10vw,44px);margin:16px 0 14px;}
+  #typed-role{font-size:15px;min-height:24px;}
+  .hero p.desc{font-size:15.5px;margin-bottom:28px;}
+  .terminal-body{padding:16px;font-size:12.5px;line-height:1.9;}
+  .terminal-body .out{padding-left:12px;overflow-x:auto;white-space:nowrap;}
+  .glass:hover{transform:none;}
+  .avatar-wrap{max-width:240px;margin:0 auto;}
+  .about-grid{gap:36px;}
+  .stat-card{padding:16px 14px;}
+  .stat-card .num{font-size:26px;}
+  .service-card{padding:24px 20px;}
+  .filter-tabs{flex-wrap:nowrap;overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+  .filter-tabs::-webkit-scrollbar{display:none;}
+  .filter-tab{flex:none;}
+  .repo-body{padding:18px 18px 20px;}
+  .repo-actions{flex-direction:column;}
+  .repo-actions .btn{justify-content:center;}
+  .blog-toolbar{flex-direction:column;align-items:stretch;}
+  .search-box{max-width:none;}
+  .contact-info-card,.form-card{padding:24px 20px;}
+  .field input,.field textarea{font-size:16px;padding:14px 14px;}
+  .social-row a,.contact-item .ic,.theme-toggle,.hamburger,.page-btn{width:44px;height:44px;}
+  .footer-grid{grid-template-columns:1fr;gap:28px;}
+  .bottom-nav{left:12px;right:12px;padding:6px;}
+  .bn-item{font-size:10px;padding:8px 2px;}
+  #back-to-top{bottom:96px;right:16px;width:44px;height:44px;}
+  .commit-log{padding-left:28px;}
+  .commit::before{left:-28px;}
+  #drawer{width:100%;max-width:100%;padding-top:92px;}
+}
+@media(max-width:400px){
+  .stats-grid{gap:10px;}
+  .footer-bottom{flex-direction:column;justify-content:center;text-align:center;}
+  .hero-grid{gap:40px;}
+  .terminal-bar .path{display:none;}
+}
+/* HEAVY FX */
+section,footer{position:relative;z-index:1;}
+body::before,body::after{content:'';position:fixed;border-radius:50%;pointer-events:none;z-index:0;will-change:transform;}
+body::before{width:60vmax;height:60vmax;left:-20vmax;top:-20vmax;background:radial-gradient(circle,var(--accent-soft),transparent 65%);animation:orb-a 24s ease-in-out infinite alternate;}
+body::after{width:56vmax;height:56vmax;right:-18vmax;bottom:-18vmax;background:radial-gradient(circle,var(--accent-2-soft),transparent 65%);animation:orb-b 30s ease-in-out infinite alternate;}
+@keyframes orb-a{from{transform:translate(0,0) scale(1);}to{transform:translate(13vmax,9vmax) scale(1.3);}}
+@keyframes orb-b{from{transform:translate(0,0) scale(1);}to{transform:translate(-11vmax,-8vmax) scale(1.25);}}
+.repo-card,.service-card,.blog-card,.contact-info-card,.form-card,.stat-card{position:relative;}
+.repo-card::after,.service-card::after,.blog-card::after{content:'';position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .35s;background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--accent) 14%,transparent),transparent 70%);z-index:2;border-radius:inherit;}
+.repo-card:hover::after,.service-card:hover::after,.blog-card:hover::after{opacity:1;}
+.skill-bar i{background:linear-gradient(90deg,var(--accent),var(--accent-2),var(--accent));background-size:200% 100%;animation:bar-shimmer 3s linear infinite;}
+@keyframes bar-shimmer{to{background-position:-200% 0;}}
+.hero-grid > *{animation:hero-in .9s cubic-bezier(.22,1,.36,1) both;}
+.hero-grid > *:nth-child(2){animation-delay:.25s;}
+@keyframes hero-in{from{opacity:0;transform:translateY(26px);}to{opacity:1;transform:none;}}
+.repo-card:hover,.service-card:hover,.blog-card:hover{border-color:var(--border-strong);box-shadow:0 0 0 1px var(--border-strong),0 24px 60px -24px var(--accent-soft);}
+@media(hover:none){.repo-card::after,.service-card::after,.blog-card::after{display:none;}}
 @media(prefers-reduced-motion: reduce){*{animation-duration:.001ms !important;transition-duration:.001ms !important;}}
 </style>
 <link rel="stylesheet" href="/css/mobile-overrides.css">
@@ -358,7 +430,7 @@ footer{border-top:1px solid var(--border);padding:56px 0 30px;}
       <div class="glass contact-info-card" data-aos="fade-right">
         <div class="contact-item">
           <div class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M4 6l8 7 8-7"/></svg></div>
-          <div><div class="lbl">EMAIL</div><div class="val">thinkcode@muhammadbinimran.online</div></div>
+          <div><div class="lbl">EMAIL</div><div class="val">{{ \App\Support\Settings::get('contact_email') }}</div></div>
         </div>
         <div class="contact-item">
           <div class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.12.9.34 1.78.66 2.61a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.47-1.23a2 2 0 012.11-.45c.83.32 1.71.54 2.61.66A2 2 0 0122 16.92z"/></svg></div>
@@ -369,8 +441,15 @@ footer{border-top:1px solid var(--border);padding:56px 0 30px;}
           <div><div class="lbl">LOCATION</div><div class="val">Punjab,Pakistan</div></div>
         </div>
         <div class="social-row">
-          <a href="https://github.com/muhammadbinimran407-tech" aria-label="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.54 2.87 8.39 6.84 9.75.5.1.68-.22.68-.5v-1.75c-2.78.62-3.37-1.36-3.37-1.36-.46-1.2-1.11-1.52-1.11-1.52-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.9 1.57 2.34 1.12 2.91.86.09-.66.35-1.12.64-1.38-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.3 9.3 0 015 0c1.9-1.33 2.74-1.05 2.74-1.05.56 1.4.21 2.45.1 2.71.65.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9v2.82c0 .28.18.6.69.5A10.03 10.03 0 0022 12.26C22 6.58 17.52 2 12 2z"/></svg></a>
-          <a href="https://www.linkedin.com/in/muhammadbinimran/" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5a2 2 0 11-4-.02 2 2 0 014 .02zM7 8.48H3V21h4V8.48zM13.5 8.48h-3.8V21h3.8v-6.4c0-3.57 4.6-3.86 4.6 0V21H22v-7.31c0-6.2-6.79-5.97-8.5-2.92V8.48z"/></svg></a>
+          @if(\App\Support\Settings::get('github'))
+          <a href="{{ \App\Support\Settings::get('github') }}" target="_blank" rel="noopener" aria-label="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.54 2.87 8.39 6.84 9.75.5.1.68-.22.68-.5v-1.75c-2.78.62-3.37-1.36-3.37-1.36-.46-1.2-1.11-1.52-1.11-1.52-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.9 1.57 2.34 1.12 2.91.86.09-.66.35-1.12.64-1.38-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.3 9.3 0 015 0c1.9-1.33 2.74-1.05 2.74-1.05.56 1.4.21 2.45.1 2.71.65.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9v2.82c0 .28.18.6.69.5A10.03 10.03 0 0022 12.26C22 6.58 17.52 2 12 2z"/></svg></a>
+          @endif
+          @if(\App\Support\Settings::get('linkedin'))
+          <a href="{{ \App\Support\Settings::get('linkedin') }}" target="_blank" rel="noopener" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5a2 2 0 11-4-.02 2 2 0 014 .02zM7 8.48H3V21h4V8.48zM13.5 8.48h-3.8V21h3.8v-6.4c0-3.57 4.6-3.86 4.6 0V21H22v-7.31c0-6.2-6.79-5.97-8.5-2.92V8.48z"/></svg></a>
+          @endif
+          @if(\App\Support\Settings::get('twitter'))
+          <a href="{{ \App\Support\Settings::get('twitter') }}" target="_blank" rel="noopener" aria-label="Twitter / X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.59l5.24 6.93 6.07-6.93zm-1.29 19.5h2.04L6.49 3.24H4.3l13.31 17.41z"/></svg></a>
+          @endif
           <a href="https://wa.me/923092885538" aria-label="WhatsApp"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403h-.004a8.06 8.06 0 00-8.071 8.071c0 1.415.369 2.801 1.07 4.026l-1.137 4.041 4.14-1.087c1.177.64 2.505 .977 3.889.977h.005c4.447 0 8.074-3.626 8.074-8.071 0-2.157-.839-4.185-2.363-5.708-1.524-1.524-3.551-2.363-5.708-2.363"/></svg></a>
         </div>
       </div>
@@ -415,7 +494,7 @@ footer{border-top:1px solid var(--border);padding:56px 0 30px;}
     <div class="footer-grid">
       <div>
     <a href="{{ route('index') }}" class="logo"><img src="{{ asset('favicon.svg') }}" alt="MBI" class="logo-img">muhammadbinimran<span style="color:var(--text-dim);font-weight:500;">.online</span></a>
-        <p style="color:var(--text-muted);font-size:14px;margin-top:14px;max-width:280px;line-height:1.7;">Full stack web developer building reliable Laravel and Go systems.</p>
+        <p style="color:var(--text-muted);font-size:14px;margin-top:14px;max-width:280px;line-height:1.7;">{{ \App\Support\Settings::get('footer_bio') }}</p>
       </div>
       <div>
         <h4>Quick Links</h4>
@@ -440,7 +519,7 @@ footer{border-top:1px solid var(--border);padding:56px 0 30px;}
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Muhammad Bin Imran. All rights reserved.</span>
+      <span>{{ \App\Support\Settings::get('copyright') }}</span>
       <span class="mono" style="color:var(--text-dim);">Built with Laravel &amp; Tailwind CSS</span>
     </div>
   </div>
@@ -557,9 +636,53 @@ window.addEventListener('mousemove',e=>{
 
 AOS.init({duration:700, easing:'ease-out-cubic', once:true, offset:60});
 gsap.registerPlugin(ScrollTrigger);
+const phEl = document.querySelector('.page-header');
+if(phEl){
+  const phB = phEl.querySelector('.breadcrumb'), phH1 = phEl.querySelector('h1'), phP = phEl.querySelector('p');
+  if(phB) gsap.from(phB, {y:16, opacity:0, duration:.6, delay:.7, ease:'power3.out'});
+  if(phH1) gsap.from(phH1, {y:26, opacity:0, duration:.7, delay:.85, ease:'power3.out'});
+  if(phP) gsap.from(phP, {y:20, opacity:0, duration:.7, delay:1.0, ease:'power3.out'});
+}
 gsap.utils.toArray('.section-head').forEach(el=>{
   gsap.from(el, {y:30, opacity:0, duration:.8, ease:'power3.out', scrollTrigger:{trigger:el, start:'top 85%'}});
 });
+
+// ---- Heavy FX: 3D tilt, cursor spotlight, magnetic buttons ----
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce) return;
+  const fine = matchMedia('(hover:hover) and (pointer:fine)').matches;
+
+  const tiltEls = Array.from(document.querySelectorAll('.repo-card,.service-card,.blog-card,.contact-info-card,.form-card,.stat-card,.avatar-ring'));
+  tiltEls.forEach(card=>{
+    card.style.willChange='transform';
+    let raf=null;
+    const reset=()=>{ if(raf)cancelAnimationFrame(raf); card.style.transform=''; };
+    const move=e=>{
+      const r=card.getBoundingClientRect();
+      if(!r.width) return;
+      const px=(e.clientX-r.left)/r.width, py=(e.clientY-r.top)/r.height;
+      const rx=(0.5-py)*9, ry=(px-0.5)*9;
+      card.style.setProperty('--mx',(px*100)+'%');
+      card.style.setProperty('--my',(py*100)+'%');
+      if(raf)cancelAnimationFrame(raf);
+      raf=requestAnimationFrame(()=>{ card.style.transform=`perspective(900px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translateY(-4px)`; });
+    };
+    if(fine){ card.addEventListener('mousemove',move); card.addEventListener('mouseleave',reset); }
+  });
+
+  if(fine){
+    const btns=Array.from(document.querySelectorAll('.btn,.filter-tab,.theme-toggle'));
+    btns.forEach(b=>{
+      b.addEventListener('mousemove',e=>{
+        const r=b.getBoundingClientRect();
+        const dx=(e.clientX-r.left-r.width/2)/7, dy=(e.clientY-r.top-r.height/2)/7;
+        b.style.transform=`translate(${dx.toFixed(2)}px,${dy.toFixed(2)}px)`;
+      });
+      b.addEventListener('mouseleave',()=>{ b.style.transform=''; });
+    });
+  }
+})();
 
 
 </script>

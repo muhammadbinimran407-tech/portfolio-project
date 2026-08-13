@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-<title>Home — Muhammad Bin Imran</title>
-<meta name="description" content="Muhammad Bin Imran — Full Stack Web Developer specializing in Laravel, Go and REST APIs.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ \App\Support\Settings::get('meta_title') }}</title>
+<meta name="description" content="{{ \App\Support\Settings::get('meta_description') }}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
@@ -88,7 +88,7 @@ nav .row{display:flex;align-items:center;justify-content:space-between;}
   .nav-links.desktop-only{display:none;}
   .hamburger{display:flex;}
 }
-@media(min-width:1025px){ #navHireDesktop{display:inline-flex !important;} }
+
 
 /* MOBILE DRAWER */
 #drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:598;opacity:0;pointer-events:none;transition:opacity .3s;}
@@ -152,13 +152,19 @@ nav .row{display:flex;align-items:center;justify-content:space-between;}
 /* ABOUT */
 .about-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:64px;align-items:start;}
 @media(max-width:900px){.about-grid{grid-template-columns:1fr;}}
-.avatar-wrap{position:relative;width:100%;max-width:320px;}
-.avatar-ring{position:relative;border-radius:20px;padding:3px;background:conic-gradient(from 0deg,var(--accent),var(--accent-2),var(--accent));animation:spin 6s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg);}}
-.avatar-inner{background:var(--surface);border-radius:18px;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-family:var(--f-display);font-size:64px;font-weight:700;color:var(--text-dim);overflow:hidden;}
-.avatar-inner img{width:100%;height:100%;object-fit:cover;display:block;}
-.status-chip{position:absolute;bottom:-14px;right:-14px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:9px 14px;font-family:var(--f-mono);font-size:12px;display:flex;align-items:center;gap:7px;box-shadow:0 10px 25px rgba(0,0,0,.3);}
-.status-chip i{width:7px;height:7px;border-radius:50%;background:#28C840;box-shadow:0 0 0 3px rgba(40,200,64,.2);}
+.avatar-wrap{position:relative;width:100%;max-width:320px;animation:avatar-float 5s ease-in-out infinite;}
+@keyframes avatar-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+.avatar-wrap::before{content:'';position:absolute;inset:-14%;border-radius:50%;background:radial-gradient(circle at 30% 30%,var(--accent-soft),transparent 60%),radial-gradient(circle at 70% 70%,var(--accent-2-soft),transparent 60%);filter:blur(30px);z-index:0;animation:avatar-aura 4.5s ease-in-out infinite;}
+@keyframes avatar-aura{0%,100%{opacity:.5;transform:scale(1);}50%{opacity:1;transform:scale(1.12);}}
+.avatar-wrap::after{content:'';position:absolute;top:4%;right:-6%;width:14px;height:14px;border-radius:50%;background:var(--accent);box-shadow:0 0 16px var(--accent);z-index:2;animation:avatar-dot 6s ease-in-out infinite;}
+@keyframes avatar-dot{0%,100%{transform:translate(0,0) scale(1);opacity:.9;}50%{transform:translate(-14px,18px) scale(.5);opacity:.35;}}
+.avatar-ring{position:relative;border-radius:24px;padding:3px;overflow:hidden;z-index:1;box-shadow:0 0 44px -10px var(--accent-soft),0 0 80px -20px var(--accent-2-soft);}
+.avatar-ring::before{content:'';position:absolute;inset:-60%;background:conic-gradient(from 0deg,var(--accent),var(--accent-2),var(--accent));animation:avatar-spin 5s linear infinite;}
+@keyframes avatar-spin{to{transform:rotate(360deg);}}
+.avatar-inner{position:relative;background:var(--surface);border-radius:21px;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-family:var(--f-display);font-size:64px;font-weight:700;color:var(--text-dim);overflow:hidden;}
+.avatar-inner img{width:100%;height:100%;object-fit:cover;display:block;animation:avatar-zoom 8s ease-in-out infinite;}
+@keyframes avatar-zoom{0%,100%{transform:scale(1);}50%{transform:scale(1.07);}}
+
 .about-bio p{color:var(--text-muted);line-height:1.8;font-size:15.5px;margin-bottom:16px;}
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:32px;}
 @media(max-width:640px){.stats-grid{grid-template-columns:repeat(2,1fr);}}
@@ -210,6 +216,18 @@ nav .row{display:flex;align-items:center;justify-content:space-between;}
 .pagination{display:flex;justify-content:center;gap:8px;margin-top:44px;}
 .page-btn{width:38px;height:38px;border-radius:9px;border:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;font-family:var(--f-mono);font-size:13px;color:var(--text-muted);transition:.2s;}
 .page-btn.active,.page-btn:hover{border-color:var(--accent);color:var(--accent);}
+.empty-note{grid-column:1/-1;color:var(--text-muted);font-family:var(--f-mono);font-size:13px;padding:32px;text-align:center;}
+
+/* TESTIMONIALS */
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+@media(max-width:900px){.testimonials-grid{grid-template-columns:1fr;}}
+.testimonial-card{padding:26px;display:flex;flex-direction:column;gap:16px;}
+.testimonial-quote{font-family:var(--f-mono);font-size:13px;letter-spacing:3px;color:var(--accent);}
+.testimonial-text{color:var(--text-muted);font-size:14.5px;line-height:1.7;flex:1;}
+.testimonial-author{display:flex;align-items:center;gap:12px;border-top:1px solid var(--border);padding-top:16px;}
+.testimonial-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#0a0e1a;display:flex;align-items:center;justify-content:center;font-family:var(--f-display);font-weight:600;font-size:15px;flex-shrink:0;}
+.testimonial-name{font-family:var(--f-display);font-size:14.5px;font-weight:600;}
+.testimonial-company{font-family:var(--f-mono);font-size:11.5px;color:var(--text-dim);margin-top:2px;}
 
 /* TIMELINE */
 .commit-log{position:relative;padding-left:32px;}
@@ -244,7 +262,7 @@ nav .row{display:flex;align-items:center;justify-content:space-between;}
 .blog-meta{display:flex;justify-content:space-between;align-items:center;font-family:var(--f-mono);font-size:11px;color:var(--text-dim);}
 .blog-meta a{color:var(--accent-2);}
 .tag-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:44px;}
-.tag-pill{font-family:var(--f-mono);font-size:11.5px;padding:6px 13px;border-radius:20px;border:1px solid var(--border);color:var(--text-muted);}
+
 
 /* CONTACT */
 .contact-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:48px;}
@@ -289,6 +307,78 @@ footer{border-top:1px solid var(--border);padding:56px 0 30px;}
 #back-to-top.show{opacity:1;pointer-events:auto;}
 #back-to-top:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-3px);}
 @media(max-width:760px){#back-to-top{bottom:88px;}}
+/* MOBILE OPTIMIZATION */
+@media(max-width:760px){
+  body{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;}
+  .wrap{padding:0 20px;}
+  nav{padding:12px 0;}
+  .nav-right .btn.desktop-only{display:none !important;}
+  .logo{font-size:17px;}
+  .logo-img{width:24px;height:24px;}
+  .section-head{margin-bottom:40px;}
+  .section-head p{font-size:15px;}
+  #scroll-progress{height:3px;}
+  .page-header{padding:118px 0 44px;}
+  .page-header h1{font-size:clamp(28px,8.5vw,40px);}
+  .page-header p{font-size:15px;}
+  .scroll-cue{display:none;}
+  .btn{padding:13px 24px;min-height:46px;font-size:14.5px;}
+  .hero-actions{flex-direction:column;align-items:stretch;}
+  .hero-actions .btn{justify-content:center;}
+  #hero{padding-top:118px;}
+  .hero h1{font-size:clamp(34px,10vw,44px);margin:16px 0 14px;}
+  #typed-role{font-size:15px;min-height:24px;}
+  .hero p.desc{font-size:15.5px;margin-bottom:28px;}
+  .terminal-body{padding:16px;font-size:12.5px;line-height:1.9;}
+  .terminal-body .out{padding-left:12px;overflow-x:auto;white-space:nowrap;}
+  .glass:hover{transform:none;}
+  .avatar-wrap{max-width:240px;margin:0 auto;}
+  .about-grid{gap:36px;}
+  .stat-card{padding:16px 14px;}
+  .stat-card .num{font-size:26px;}
+  .service-card{padding:24px 20px;}
+  .filter-tabs{flex-wrap:nowrap;overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+  .filter-tabs::-webkit-scrollbar{display:none;}
+  .filter-tab{flex:none;}
+  .repo-body{padding:18px 18px 20px;}
+  .repo-actions{flex-direction:column;}
+  .repo-actions .btn{justify-content:center;}
+  .blog-toolbar{flex-direction:column;align-items:stretch;}
+  .search-box{max-width:none;}
+  .contact-info-card,.form-card{padding:24px 20px;}
+  .field input,.field textarea{font-size:16px;padding:14px 14px;}
+  .social-row a,.contact-item .ic,.theme-toggle,.hamburger,.page-btn{width:44px;height:44px;}
+  .footer-grid{grid-template-columns:1fr;gap:28px;}
+  .bottom-nav{left:12px;right:12px;padding:6px;}
+  .bn-item{font-size:10px;padding:8px 2px;}
+  #back-to-top{bottom:96px;right:16px;width:44px;height:44px;}
+  .commit-log{padding-left:28px;}
+  .commit::before{left:-28px;}
+  #drawer{width:100%;max-width:100%;padding-top:92px;}
+}
+@media(max-width:400px){
+  .stats-grid{gap:10px;}
+  .footer-bottom{flex-direction:column;justify-content:center;text-align:center;}
+  .hero-grid{gap:40px;}
+  .terminal-bar .path{display:none;}
+}
+/* HEAVY FX */
+section,footer{position:relative;z-index:1;}
+body::before,body::after{content:'';position:fixed;border-radius:50%;pointer-events:none;z-index:0;will-change:transform;}
+body::before{width:60vmax;height:60vmax;left:-20vmax;top:-20vmax;background:radial-gradient(circle,var(--accent-soft),transparent 65%);animation:orb-a 24s ease-in-out infinite alternate;}
+body::after{width:56vmax;height:56vmax;right:-18vmax;bottom:-18vmax;background:radial-gradient(circle,var(--accent-2-soft),transparent 65%);animation:orb-b 30s ease-in-out infinite alternate;}
+@keyframes orb-a{from{transform:translate(0,0) scale(1);}to{transform:translate(13vmax,9vmax) scale(1.3);}}
+@keyframes orb-b{from{transform:translate(0,0) scale(1);}to{transform:translate(-11vmax,-8vmax) scale(1.25);}}
+.repo-card,.service-card,.blog-card,.contact-info-card,.form-card,.stat-card{position:relative;}
+.repo-card::after,.service-card::after,.blog-card::after{content:'';position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .35s;background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--accent) 14%,transparent),transparent 70%);z-index:2;border-radius:inherit;}
+.repo-card:hover::after,.service-card:hover::after,.blog-card:hover::after{opacity:1;}
+.skill-bar i{background:linear-gradient(90deg,var(--accent),var(--accent-2),var(--accent));background-size:200% 100%;animation:bar-shimmer 3s linear infinite;}
+@keyframes bar-shimmer{to{background-position:-200% 0;}}
+.hero-grid > *{animation:hero-in .9s cubic-bezier(.22,1,.36,1) both;}
+.hero-grid > *:nth-child(2){animation-delay:.25s;}
+@keyframes hero-in{from{opacity:0;transform:translateY(26px);}to{opacity:1;transform:none;}}
+.repo-card:hover,.service-card:hover,.blog-card:hover{border-color:var(--border-strong);box-shadow:0 0 0 1px var(--border-strong),0 24px 60px -24px var(--accent-soft);}
+@media(hover:none){.repo-card::after,.service-card::after,.blog-card::after{display:none;}}
 @media(prefers-reduced-motion: reduce){*{animation-duration:.001ms !important;transition-duration:.001ms !important;}}
 </style>
 <link rel="stylesheet" href="/css/mobile-overrides.css">
@@ -356,7 +446,7 @@ footer{border-top:1px solid var(--border);padding:56px 0 30px;}
       <div class="hero-actions">
         <a href="{{ route('resume') }}" class="btn btn-primary">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16"/></svg>
-          Download Resume
+          Download My CV
         </a>
         <a href="{{ route('contact') }}" class="btn btn-ghost">Hire Me</a>
         <a href="{{ route('projects') }}" class="btn btn-ghost">View Projects</a>
@@ -383,7 +473,6 @@ footer{border-top:1px solid var(--border);padding:56px 0 30px;}
     <div data-aos="fade-right">
       <div class="avatar-wrap">
         <div class="avatar-ring"><div class="avatar-inner"><img src="{{asset('profile.png')}}" alt="Muhammad Bin Imran"></div></div>
-        <div class="status-chip"><i></i>Available for hire</div>
       </div>
     </div>
     <div class="about-bio" data-aos="fade-left">
@@ -392,10 +481,10 @@ footer{border-top:1px solid var(--border);padding:56px 0 30px;}
       <p>Full stack web developer focused on building fast, dependable products end to end — Laravel and Go on the backend, clean REST APIs, Tailwind and vanilla JavaScript on the front end.</p>
       <a href="{{ route('about') }}" class="btn btn-ghost" style="margin-top:8px;">Read Full Bio →</a>
       <div class="stats-grid">
-        <div class="glass stat-card"><div class="num"><span data-count="1">0</span>+</div><div class="label">PROJECTS COMPLETED</div></div>
-        <div class="glass stat-card"><div class="num"><span data-count="1">0</span>+</div><div class="label">YEARS EXPERIENCE</div></div>
-        <div class="glass stat-card"><div class="num"><span data-count="3">0</span>+</div><div class="label">GITHUB CONTRIBUTIONS</div></div>
-        <div class="glass stat-card"><div class="num"><span data-count="4">0</span>+</div><div class="label">HAPPY CLIENTS</div></div>
+        <div class="glass stat-card"><div class="num"><span data-count="{{ $stats['projects'] ?? 0 }}">0</span>+</div><div class="label">PROJECTS SHIPPED</div></div>
+        <div class="glass stat-card"><div class="num"><span data-count="{{ $stats['years'] ?? 1 }}">0</span>+</div><div class="label">YEARS EXPERIENCE</div></div>
+        <div class="glass stat-card"><div class="num"><span data-count="{{ $stats['skills'] ?? 0 }}">0</span>+</div><div class="label">SKILLS MASTERED</div></div>
+        <div class="glass stat-card"><div class="num"><span data-count="{{ $stats['clients'] ?? 0 }}">0</span>+</div><div class="label">HAPPY CLIENTS</div></div>
       </div>
     </div>
   </div>
@@ -434,24 +523,72 @@ footer{border-top:1px solid var(--border);padding:56px 0 30px;}
       <p>A couple of things I've shipped recently.</p>
     </div>
     <div class="projects-grid">
+      @forelse(($projects ?? []) as $project)
       <div class="glass repo-card" data-aos="fade-up">
-        <div class="repo-thumb">project-preview.png</div>
+        <div class="repo-thumb">{{ $project->image ?? $project->title ?? 'project-preview.png' }}</div>
         <div class="repo-body">
-          <div class="repo-top"><h3>Invoicely</h3><div class="repo-meta"><span>★ 128</span><span>⑂ 24</span></div></div>
-          <p>SaaS invoicing platform with subscription billing, PDF generation, and a client portal.</p>
-          <div class="badges"><span class="badge">Laravel</span><span class="badge">Livewire</span><span class="badge">MySQL</span></div>
+          <div class="repo-top">
+            <h3>{{ $project->title ?? $project->name ?? 'Untitled' }}</h3>
+            @if($project->stars || $project->forks)
+            <div class="repo-meta">
+              @if($project->stars)<span>★ {{ $project->stars }}</span>@endif
+              @if($project->forks)<span>⑂ {{ $project->forks }}</span>@endif
+            </div>
+            @endif
+          </div>
+          <p>{{ $project->description ?? '' }}</p>
+          @if($project->tech || $project->technologies)
+          <div class="badges">
+            @php $techs = explode(',', $project->technologies ?? $project->tech ?? ''); @endphp
+            @foreach($techs as $tech)
+            @if(trim($tech))<span class="badge">{{ trim($tech) }}</span>@endif
+            @endforeach
+          </div>
+          @endif
+          <div class="repo-actions">
+            @if($project->github)
+            <a href="{{ $project->github }}" class="btn btn-ghost">GitHub</a>
+            @endif
+            @if($project->demo || $project->url)
+            <a href="{{ $project->demo ?? $project->url }}" class="btn btn-primary">Live Demo</a>
+            @endif
+          </div>
         </div>
       </div>
-      <div class="glass repo-card" data-aos="fade-up" data-aos-delay="80">
-        <div class="repo-thumb">project-preview.png</div>
-        <div class="repo-body">
-          <div class="repo-top"><h3>Fleetpulse</h3><div class="repo-meta"><span>★ 96</span><span>⑂ 12</span></div></div>
-          <p>Real-time fleet tracking API built in Go, handling 10k+ concurrent socket connections.</p>
-          <div class="badges"><span class="badge">Golang</span><span class="badge">WebSockets</span><span class="badge">Redis</span></div>
-        </div>
-      </div>
+      @empty
+      <p class="empty-note">No featured projects yet — add some from the admin panel.</p>
+      @endforelse
     </div>
     <div style="text-align:center;margin-top:36px;"><a href="{{ route('projects') }}" class="btn btn-ghost">View All Projects →</a></div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">./testimonials</span>
+      <h2>What clients say.</h2>
+      <p>Real words from people I've shipped software with.</p>
+    </div>
+    <div class="testimonials-grid">
+      @forelse(($testimonials ?? []) as $testimonial)
+      <div class="glass testimonial-card" data-aos="fade-up">
+        <div class="testimonial-quote">
+          @for($i = 0; $i < ($testimonial->rating ?? 5); $i++)★@endfor
+        </div>
+        <p class="testimonial-text">“{{ $testimonial->text ?? '' }}”</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">{{ strtoupper(mb_substr($testimonial->name ?? '?', 0, 1)) }}</div>
+          <div>
+            <div class="testimonial-name">{{ $testimonial->name ?? 'Anonymous' }}</div>
+            <div class="testimonial-company">{{ $testimonial->company ?? '' }}</div>
+          </div>
+        </div>
+      </div>
+      @empty
+      <p class="empty-note">No testimonials yet — add some from the admin panel.</p>
+      @endforelse
+    </div>
   </div>
 </section>
 
@@ -467,7 +604,7 @@ footer{border-top:1px solid var(--border);padding:56px 0 30px;}
 
 <section id="support">
   <div class="wrap">
-    <div class="section-head" style="text-align:center;margin-left:auto;margin-right:auto;" data-aos="fade-up">
+    <div class="section-head" style="text-align:center;margin-left:auto;margin-right:auto;">
       <h2>Support My Work</h2>
       <p>Buy me a coffee — or a few. Every tip keeps the tutorials, open source and this site running.</p>
     </div>
@@ -483,20 +620,33 @@ footer{border-top:1px solid var(--border);padding:56px 0 30px;}
         <input type="number" id="donate-amount" min="1" step="0.5" value="5" inputmode="decimal" aria-label="Donation amount">
       </div>
       <div class="support-actions">
+        <button type="button" class="btn btn-primary" data-pay="card">Pay with Card</button>
         <button type="button" class="btn btn-primary" data-pay="stripe">Pay with Stripe</button>
         <button type="button" class="btn btn-ghost" data-pay="paypal">Donate via PayPal</button>
+        <button type="button" class="btn btn-ghost" data-pay="jazzcash">Pay with JazzCash</button>
       </div>
-      <p class="support-note" id="donate-note">Payments are processed securely by Stripe &amp; PayPal.</p>
+      <p class="support-note" id="donate-note">Payments are processed securely by Stripe, PayPal &amp; JazzCash.</p>
     </div>
   </div>
 </section>
+
+<div id="stripeModal" class="stripe-modal">
+  <div class="stripe-modal-card glass">
+    <button type="button" id="stripeModalClose" class="stripe-modal-close" aria-label="Close">&times;</button>
+    <h3 class="stripe-modal-title" id="stripeModalTitle">Pay with Card</h3>
+    <p class="stripe-modal-amount" id="stripeModalAmount"><small>USD</small></p>
+    <div id="stripePaymentElement"></div>
+    <button type="button" id="stripePayBtn" class="btn btn-primary" disabled>Pay Now</button>
+    <p class="support-note" id="stripeModalError" style="color:var(--danger);min-height:18px;"></p>
+  </div>
+</div>
 
 <footer>
   <div class="wrap">
     <div class="footer-grid">
       <div>
         <a href="{{route('index')}}" class="logo"><i></i>muhammadbinimran<span style="color:var(--text-dim);font-weight:500;">.online</span></a>
-        <p style="color:var(--text-muted);font-size:14px;margin-top:14px;max-width:280px;line-height:1.7;">Full stack web developer building reliable Laravel and Go systems.</p>
+        <p style="color:var(--text-muted);font-size:14px;margin-top:14px;max-width:280px;line-height:1.7;">{{ \App\Support\Settings::get('footer_bio') }}</p>
       </div>
       <div>
         <h4>Quick Links</h4>
@@ -521,7 +671,7 @@ footer{border-top:1px solid var(--border);padding:56px 0 30px;}
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Muhammad Bin Imran. All rights reserved.</span>
+      <span>{{ \App\Support\Settings::get('copyright') }}</span>
       <span class="mono" style="color:var(--text-dim);">Built with Laravel &amp; Tailwind CSS</span>
     </div>
   </div>
@@ -558,6 +708,7 @@ footer{border-top:1px solid var(--border);padding:56px 0 30px;}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.16/typed.umd.min.js"></script>
+<script src="https://js.stripe.com/v3/"></script>
 <script>
 document.body.classList.toggle('has-bottom-nav', true);
 
@@ -644,6 +795,43 @@ gsap.utils.toArray('.section-head').forEach(el=>{
   gsap.from(el, {y:30, opacity:0, duration:.8, ease:'power3.out', scrollTrigger:{trigger:el, start:'top 85%'}});
 });
 
+// ---- Heavy FX: 3D tilt, cursor spotlight, magnetic buttons ----
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce) return;
+  const fine = matchMedia('(hover:hover) and (pointer:fine)').matches;
+
+  const tiltEls = Array.from(document.querySelectorAll('.repo-card,.service-card,.blog-card,.contact-info-card,.form-card,.stat-card,.avatar-ring'));
+  tiltEls.forEach(card=>{
+    card.style.willChange='transform';
+    let raf=null;
+    const reset=()=>{ if(raf)cancelAnimationFrame(raf); card.style.transform=''; };
+    const move=e=>{
+      const r=card.getBoundingClientRect();
+      if(!r.width) return;
+      const px=(e.clientX-r.left)/r.width, py=(e.clientY-r.top)/r.height;
+      const rx=(0.5-py)*9, ry=(px-0.5)*9;
+      card.style.setProperty('--mx',(px*100)+'%');
+      card.style.setProperty('--my',(py*100)+'%');
+      if(raf)cancelAnimationFrame(raf);
+      raf=requestAnimationFrame(()=>{ card.style.transform=`perspective(900px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translateY(-4px)`; });
+    };
+    if(fine){ card.addEventListener('mousemove',move); card.addEventListener('mouseleave',reset); }
+  });
+
+  if(fine){
+    const btns=Array.from(document.querySelectorAll('.btn,.filter-tab,.theme-toggle'));
+    btns.forEach(b=>{
+      b.addEventListener('mousemove',e=>{
+        const r=b.getBoundingClientRect();
+        const dx=(e.clientX-r.left-r.width/2)/7, dy=(e.clientY-r.top-r.height/2)/7;
+        b.style.transform=`translate(${dx.toFixed(2)}px,${dy.toFixed(2)}px)`;
+      });
+      b.addEventListener('mouseleave',()=>{ b.style.transform=''; });
+    });
+  }
+})();
+
 
 const canvas = document.getElementById('network-canvas');
 const ctx = canvas.getContext('2d');
@@ -691,7 +879,7 @@ const counterObserver = new IntersectionObserver(entries=>{
 },{threshold:0.5});
 document.querySelectorAll('[data-count]').forEach(el=>counterObserver.observe(el));
 
-// ---- Payment: Stripe & PayPal (support section) ----
+// ---- Payment: Card (inline), PayPal & JazzCash (support section) ----
 (function(){
   const presets = Array.from(document.querySelectorAll('.support-card .preset'));
   const amountInput = document.getElementById('donate-amount');
@@ -705,12 +893,103 @@ document.querySelectorAll('[data-count]').forEach(el=>counterObserver.observe(el
     });
   });
   amountInput.addEventListener('input',()=>presets.forEach(x=>x.classList.remove('is-active')));
+  const fail = (msg)=>{ note.style.color = 'var(--danger)'; note.textContent = msg; };
+
+  const modal = document.getElementById('stripeModal');
+  const titleEl = document.getElementById('stripeModalTitle');
+  const amountEl = document.getElementById('stripeModalAmount');
+  const elementBox = document.getElementById('stripePaymentElement');
+  const payBtn = document.getElementById('stripePayBtn');
+  const errEl = document.getElementById('stripeModalError');
+  const closeBtn = document.getElementById('stripeModalClose');
+  const pubKey = '{{ config('services.stripe.public') }}';
+  let stripe, elements;
+
+  function closeModal(){
+    modal.classList.remove('open');
+    elementBox.innerHTML = '';
+    payBtn.disabled = true;
+    payBtn.textContent = 'Pay Now';
+  }
+  function openError(msg){
+    errEl.textContent = msg;
+    elementBox.innerHTML = '';
+    payBtn.disabled = true;
+    payBtn.textContent = 'Pay Now';
+  }
+
+  const openCardModal = (usd)=>{
+    titleEl.textContent = 'Pay with Card';
+    amountEl.innerHTML = '$'+usd.toFixed(2)+' <small>USD</small>';
+    errEl.textContent = '';
+    elementBox.innerHTML = '<p class="support-note">Loading secure payment form…</p>';
+    payBtn.disabled = true;
+    payBtn.textContent = 'Pay Now';
+    modal.classList.add('open');
+
+    fetch('{{ route('payment.stripe.intent') }}', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json','Accept':'application/json','X-CSRF-TOKEN':'{{ csrf_token() }}'},
+      body: JSON.stringify({amount: usd, title: 'Buy Muhammad Bin Imran a coffee'})
+    })
+    .then(r=>r.json().then(d=>({ok:r.ok, d})))
+    .then(res=>{
+      if(!res.ok){ openError(res.d.error || 'Could not start payment.'); return; }
+      if(!window.Stripe){ openError('Stripe.js failed to load.'); return; }
+      if(!pubKey){ openError('Stripe public key is not set.'); return; }
+      stripe = window.Stripe(pubKey);
+      elements = stripe.elements({
+        clientSecret: res.d.client_secret,
+        appearance: {
+          theme: 'night',
+          variables: { colorPrimary: '#f97316', colorBackground: '#11120f', colorText: '#fff', fontFamily: 'ui-monospace, monospace' }
+        }
+      });
+      const pe = elements.create('payment');
+      pe.mount(elementBox);
+      pe.on('change', e => { payBtn.disabled = e.empty; });
+      payBtn.disabled = true;
+    })
+    .catch(()=>{ openError('Network error. Please try again.'); });
+  };
+
+  payBtn.addEventListener('click', async ()=>{
+    payBtn.disabled = true;
+    payBtn.textContent = 'Processing…';
+    errEl.textContent = '';
+    const {error} = await stripe.confirmPayment({
+      elements,
+      redirect: 'if_required',
+      confirmParams: { return_url: '{{ url('/contact?payment=success') }}' }
+    });
+    if(error){
+      errEl.textContent = error.message;
+      payBtn.disabled = false;
+      payBtn.textContent = 'Pay Now';
+    } else {
+      window.location.href = '{{ url('/contact?payment=success') }}';
+    }
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', e => { if(e.target === modal) closeModal(); });
+
   const pay = (btn)=>{
     const amount = parseFloat(amountInput.value) || 5;
+    const method = btn.getAttribute('data-pay');
+    if(method === 'card'){
+      note.style.color = '';
+      note.textContent = '';
+      openCardModal(amount);
+      return;
+    }
     note.style.color = '';
     note.textContent = 'Processing payment…';
     btn.disabled = true;
-    fetch(btn.getAttribute('data-pay')==='stripe' ? '{{ route('payment.stripe') }}' : '{{ route('payment.paypal') }}', {
+    const endpoint = method === 'paypal' ? '{{ route('payment.paypal') }}'
+      : method === 'stripe' ? '{{ route('payment.stripe') }}'
+      : '{{ route('payment.jazzcash') }}';
+    fetch(endpoint, {
       method: 'POST',
       headers: {'Content-Type':'application/json','Accept':'application/json','X-CSRF-TOKEN':'{{ csrf_token() }}'},
       body: JSON.stringify({amount: amount, title: 'Buy Muhammad Bin Imran a coffee'})
@@ -718,10 +997,24 @@ document.querySelectorAll('[data-count]').forEach(el=>counterObserver.observe(el
     .then(r=>r.json().then(d=>({ok:r.ok, d})))
     .then(res=>{
       btn.disabled = false;
-      if(res.ok && res.d.url){ window.location.href = res.d.url; }
-      else { note.style.color = 'var(--danger)'; note.textContent = res.d.error || 'Payment could not be started.'; }
+      if(!res.ok){ fail(res.d.error || 'Payment could not be started.'); return; }
+      if(method === 'jazzcash'){
+        const form = document.createElement('form');
+        form.method = res.d.method || 'POST';
+        form.action = res.d.url;
+        form.style.display = 'none';
+        Object.entries(res.d.fields || {}).forEach(([k,v])=>{
+          const input = document.createElement('input');
+          input.type = 'hidden'; input.name = k; input.value = v;
+          form.appendChild(input);
+        });
+        document.body.appendChild(form);
+        form.submit();
+      } else if(res.d.url){
+        window.location.href = res.d.url;
+      }
     })
-    .catch(()=>{ btn.disabled = false; note.style.color = 'var(--danger)'; note.textContent = 'Network error. Please try again.'; });
+    .catch(()=>{ btn.disabled = false; fail('Network error. Please try again.'); });
   };
   document.querySelectorAll('.support-card [data-pay]').forEach(btn=>btn.addEventListener('click',()=>pay(btn)));
 })();

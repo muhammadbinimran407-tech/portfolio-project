@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Panel — Muhammad Bin Imran</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -35,13 +35,7 @@ a{color:inherit;text-decoration:none;} ul{list-style:none;} button{font-family:i
 .mono{font-family:var(--f-mono);}
 input,select,textarea{font-family:var(--f-body);}
 
-/* ===== LOGIN ===== */
-#loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;position:relative;overflow:hidden;}
-#loginScreen .grid-bg{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:56px 56px;-webkit-mask-image:radial-gradient(ellipse 60% 60% at 50% 40%,#000 10%,transparent 75%);mask-image:radial-gradient(ellipse 60% 60% at 50% 40%,#000 10%,transparent 75%);}
-.login-card{position:relative;z-index:2;width:100%;max-width:400px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:36px 32px;box-shadow:0 30px 60px rgba(0,0,0,.35);}
-.login-logo{display:flex;align-items:center;gap:8px;font-family:var(--f-display);font-weight:700;font-size:19px;margin-bottom:6px;}
-.login-logo i{width:8px;height:8px;border-radius:50%;background:var(--accent-2);box-shadow:0 0 0 4px var(--accent-2-soft);}
-.login-sub{font-family:var(--f-mono);font-size:12px;color:var(--text-dim);margin-bottom:28px;}
+/* ===== FORMS / BUTTONS ===== */
 .field{margin-bottom:18px;}
 .field label{display:block;font-family:var(--f-mono);font-size:11px;color:var(--text-dim);margin-bottom:7px;letter-spacing:.05em;}
 .field input,.field select,.field textarea{width:100%;background:var(--bg-alt);border:1px solid var(--border);border-radius:9px;padding:11px 14px;color:var(--text);font-size:14px;transition:border-color .2s;}
@@ -62,7 +56,6 @@ input,select,textarea{font-family:var(--f-body);}
 .btn-sm{padding:7px 12px;font-size:12px;border-radius:8px;}
 .btn-icon{width:34px;height:34px;padding:0;border-radius:9px;}
 .btn-icon:hover{transform:translateY(-1px);}
-.login-hint{font-family:var(--f-mono);font-size:11px;color:var(--text-dim);margin-top:18px;text-align:center;line-height:1.7;}
 
 /* ===== ADMIN SHELL ===== */
 #adminShell{display:none;}
@@ -187,6 +180,8 @@ tbody tr:hover{background:var(--surface-alt);}
 .msg-date{font-family:var(--f-mono);font-size:11px;color:var(--text-dim);white-space:nowrap;}
 .msg-preview{color:var(--text-muted);font-size:13px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .msg-email{font-family:var(--f-mono);font-size:11.5px;color:var(--text-dim);}
+.msg-item.msg-open{background:var(--surface-alt);}
+.msg-full{color:var(--text);font-size:14px;line-height:1.7;margin-top:10px;padding:14px;background:var(--bg-alt);border:1px solid var(--border);border-radius:9px;white-space:pre-wrap;word-break:break-word;}
 
 /* MEDIA */
 .upload-zone{border:1.5px dashed var(--border-strong);border-radius:var(--radius);padding:40px;text-align:center;color:var(--text-muted);margin-bottom:22px;transition:.2s;}
@@ -254,6 +249,7 @@ tbody tr:hover{background:var(--surface-alt);}
         <a href="{{ route('admin.index', ['view' => 'testimonials']) }}" data-view="testimonials"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Testimonials<span class="count" id="cntTestimonials">0</span></a>
         <a href="{{ route('admin.index', ['view' => 'blog']) }}" data-view="blog"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>Blog<span class="count" id="cntBlog">0</span></a>
         <a href="{{ route('admin.index', ['view' => 'messages']) }}" data-view="messages"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16v16H4z"/><path d="M4 6l8 7 8-7"/></svg>Messages<span class="count" id="cntMessages">0</span></a>
+        <a href="{{ route('admin.index', ['view' => 'subscribers']) }}" data-view="subscribers"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>Subscribers<span class="count" id="cntSubscribers">0</span></a>
         <a href="#" data-view="media"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>Media</a>
         <a href="{{ route('admin.index', ['view' => 'settings']) }}" data-view="settings"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.6 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>Settings</a>
     </nav>
@@ -292,16 +288,20 @@ tbody tr:hover{background:var(--surface-alt);}
       <!-- DASHBOARD -->
       <section class="view active" id="view-dashboard">
         <div class="view-head"><div><h2>Welcome back, {{ auth()->user()->name ?? 'Admin' }}</h2><p>Here's what's happening with your portfolio.</p></div></div>
-        <div class="kpi-grid">
-          <div class="kpi-card"><div class="kpi-top"><div class="kpi-icon" style="background:var(--accent-soft);color:var(--accent);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 17l6-6-6-6M12 19h8"/></svg></div><span class="kpi-trend">+12%</span></div><div class="kpi-num" id="kpiProjects">0</div><div class="kpi-label">TOTAL PROJECTS</div></div>
-          <div class="kpi-card"><div class="kpi-top"><div class="kpi-icon" style="background:var(--accent-2-soft);color:var(--accent-2);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div><span class="kpi-trend">+3</span></div><div class="kpi-num" id="kpiBlog">0</div><div class="kpi-label">BLOG POSTS</div></div>
-          <div class="kpi-card"><div class="kpi-top"><div class="kpi-icon" style="background:var(--danger-soft);color:var(--danger);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16v16H4z"/><path d="M4 6l8 7 8-7"/></svg></div><span class="kpi-trend" id="kpiUnreadTrend">0 new</span></div><div class="kpi-num" id="kpiMessages">0</div><div class="kpi-label">MESSAGES</div></div>
-          <div class="kpi-card"><div class="kpi-top"><div class="kpi-icon" style="background:var(--success-soft);color:var(--success);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></div><span class="kpi-trend">+18</span></div><div class="kpi-num">1.2K</div><div class="kpi-label">GITHUB STARS</div></div>
+        <div class="kpi-grid" id="kpiGrid">
+          <div class="kpi-card"><div class="kpi-top"><div class="kpi-icon" style="background:var(--accent-soft);color:var(--accent);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 17l6-6-6-6M12 19h8"/></svg></div><span class="kpi-trend" id="kpiFeaturedTrend">0 featured</span></div><div class="kpi-num" id="kpiProjects">0</div><div class="kpi-label">TOTAL PROJECTS</div></div>
+          <div class="kpi-card"><div class="kpi-top"><div class="kpi-icon" style="background:var(--accent-2-soft);color:var(--accent-2);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg></div><span class="kpi-trend">skills</span></div><div class="kpi-num" id="kpiSkills">0</div><div class="kpi-label">SKILLS</div></div>
+          <div class="kpi-card"><div class="kpi-top"><div class="kpi-icon" style="background:var(--danger-soft);color:var(--danger);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16v16H4z"/><path d="M4 6l8 7 8-7"/></svg></div><span class="kpi-trend" id="kpiUnreadTrend">0 unread</span></div><div class="kpi-num" id="kpiMessages">0</div><div class="kpi-label">MESSAGES</div></div>
+          <div class="kpi-card"><div class="kpi-top"><div class="kpi-icon" style="background:var(--success-soft);color:var(--success);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/></svg></div><span class="kpi-trend">newsletter</span></div><div class="kpi-num" id="kpiSubscribers">0</div><div class="kpi-label">SUBSCRIBERS</div></div>
+          <div class="kpi-card"><div class="kpi-top"><div class="kpi-icon" style="background:var(--accent-soft);color:var(--accent);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div><span class="kpi-trend">posts</span></div><div class="kpi-num" id="kpiBlog">0</div><div class="kpi-label">BLOG POSTS</div></div>
+          <div class="kpi-card"><div class="kpi-top"><div class="kpi-icon" style="background:var(--accent-2-soft);color:var(--accent-2);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></div><span class="kpi-trend">timeline</span></div><div class="kpi-num" id="kpiExperience">0</div><div class="kpi-label">EXPERIENCE</div></div>
+          <div class="kpi-card"><div class="kpi-top"><div class="kpi-icon" style="background:var(--danger-soft);color:var(--danger);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><span class="kpi-trend">reviews</span></div><div class="kpi-num" id="kpiTestimonials">0</div><div class="kpi-label">TESTIMONIALS</div></div>
+          <div class="kpi-card"><div class="kpi-top"><div class="kpi-icon" style="background:var(--success-soft);color:var(--success);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><span class="kpi-trend">files</span></div><div class="kpi-num" id="kpiMedia">0</div><div class="kpi-label">MEDIA FILES</div></div>
         </div>
         <div class="chart-grid">
           <div class="panel">
-            <div class="panel-head"><span>portfolio_visits.chart</span><span>last 7 days</span></div>
-            <div class="panel-body"><canvas id="visitsChart" height="150"></canvas></div>
+            <div class="panel-head"><span>messages.7d</span><span id="chartRange">last 7 days</span></div>
+            <div class="panel-body"><canvas id="visitsChart" height="150"></canvas><div id="chartEmpty" style="display:none;text-align:center;padding:40px 0;color:var(--text-dim);font-family:var(--f-mono);font-size:12px;">No messages in the last 7 days.</div></div>
           </div>
           <div class="panel">
             <div class="panel-head"><span>recent_messages.log</span><a href="#" data-view="messages" class="view-link" style="color:var(--accent-2);">View all</a></div>
@@ -363,6 +363,15 @@ tbody tr:hover{background:var(--surface-alt);}
         <div class="panel" id="messagesPanel"></div>
       </section>
 
+      <!-- SUBSCRIBERS -->
+      <section class="view" id="view-subscribers">
+        <div class="view-head">
+          <div><h2>Subscribers</h2><p>Emails collected via the newsletter form.</p></div>
+          <button class="btn btn-primary" onclick="openEntityModal('subscribers')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg> Add Subscriber</button>
+        </div>
+        <div class="panel"><div class="table-wrap" id="table-subscribers"></div></div>
+      </section>
+
       <!-- MEDIA -->
       <section class="view" id="view-media">
         <div class="view-head"><div><h2>Media &amp; Resume</h2><p>Upload images and your resume PDF for use across the site.</p></div></div>
@@ -386,26 +395,31 @@ tbody tr:hover{background:var(--surface-alt);}
         <div class="panel"><div class="panel-body">
           <div class="settings-panel active" data-panel="general">
             <div class="form-row">
-              <div class="field"><label>SITE TITLE</label><input type="text" value="Muhammad Bin Imran — Full Stack Web Developer"></div>
-              <div class="field"><label>TAGLINE</label><input type="text" value="Laravel · Go · REST APIs"></div>
+              <div class="field"><label>SITE NAME</label><input type="text" id="set-site_name" value="Muhammad Bin Imran"></div>
+              <div class="field"><label>SITE TITLE</label><input type="text" id="set-site_title" value="Muhammad Bin Imran — Full Stack Web Developer"></div>
             </div>
-            <div class="field"><label>CONTACT EMAIL</label><input type="email" value="hello@muhammadbiimran.online"></div>
-            <div class="toggle-row"><span style="font-size:13.5px;">Maintenance Mode</span><label class="switch"><input type="checkbox"><span class="slider-tog"></span></label></div>
-            <button class="btn btn-primary" onclick="toast('Settings saved')">Save Changes</button>
+            <div class="form-row">
+              <div class="field"><label>TAGLINE</label><input type="text" id="set-tagline" value="Laravel · Go · REST APIs"></div>
+              <div class="field"><label>CONTACT EMAIL</label><input type="email" id="set-contact_email" value="thinkcode@muhammadbinimran.online"></div>
+            </div>
+            <div class="field"><label>FOOTER BIO</label><input type="text" id="set-footer_bio" value="Full stack web developer building reliable Laravel and Go systems."></div>
+            <div class="field"><label>COPYRIGHT LINE</label><input type="text" id="set-copyright"></div>
+            <div class="toggle-row"><span style="font-size:13.5px;">Maintenance Mode</span><label class="switch"><input type="checkbox" id="set-maintenance_mode"><span class="slider-tog"></span></label></div>
+            <button class="btn btn-primary" onclick="saveSettings()">Save Changes</button>
           </div>
           <div class="settings-panel" data-panel="seo">
-            <div class="field"><label>META TITLE</label><input type="text" value="Muhammad Bin Imran | Laravel &amp; Go Developer"></div>
-            <div class="field"><label>META DESCRIPTION</label><textarea>Full stack web developer specializing in Laravel, Go and REST APIs. Available for hire.</textarea></div>
-            <div class="field"><label>OG IMAGE URL</label><input type="text" placeholder="https://muhammadbiimran.online/og-cover.png"></div>
-            <button class="btn btn-primary" onclick="toast('SEO settings saved')">Save Changes</button>
+            <div class="field"><label>META TITLE</label><input type="text" id="set-meta_title" value="Muhammad Bin Imran | Laravel &amp; Go Developer"></div>
+            <div class="field"><label>META DESCRIPTION</label><textarea id="set-meta_description">Full stack web developer specializing in Laravel, Go and REST APIs. Available for hire.</textarea></div>
+            <div class="field"><label>OG IMAGE URL</label><input type="text" id="set-og_image" placeholder="https://muhammadbiimran.online/og-cover.png"></div>
+            <button class="btn btn-primary" onclick="saveSettings()">Save Changes</button>
           </div>
           <div class="settings-panel" data-panel="social">
             <div class="form-row">
-              <div class="field"><label>GITHUB URL</label><input type="text" value="https://github.com/muhammadbinimran"></div>
-              <div class="field"><label>LINKEDIN URL</label><input type="text" value="https://linkedin.com/in/muhammadbinimran"></div>
+              <div class="field"><label>GITHUB URL</label><input type="text" id="set-github" value="https://github.com/muhammadbinimran"></div>
+              <div class="field"><label>LINKEDIN URL</label><input type="text" id="set-linkedin" value="https://linkedin.com/in/muhammadbinimran"></div>
             </div>
-            <div class="field"><label>TWITTER / X URL</label><input type="text" placeholder="https://x.com/yourhandle"></div>
-            <button class="btn btn-primary" onclick="toast('Social links saved')">Save Changes</button>
+            <div class="field"><label>TWITTER / X URL</label><input type="text" id="set-twitter" placeholder="https://x.com/yourhandle"></div>
+            <button class="btn btn-primary" onclick="saveSettings()">Save Changes</button>
           </div>
         </div></div>
       </section>
@@ -511,39 +525,16 @@ document.querySelectorAll('.settings-tab').forEach(tab=>{
   });
 });
 
-/* ---------- DATA STORE (in-memory demo data) ---------- */
+/* ---------- DATA STORE (loaded from server) ---------- */
 let DB = {
-  projects: [
-    {id:1,title:'Invoicely',category:'Laravel',tech:'Laravel, Livewire, MySQL',github:'https://github.com/muhammadbinimran/invoicely',demo:'https://invoicely.demo',featured:true,status:'Published'},
-    {id:2,title:'Fleetpulse',category:'Go',tech:'Golang, WebSockets, Redis',github:'https://github.com/muhammadbinimran/fleetpulse',demo:'https://fleetpulse.demo',featured:true,status:'Published'},
-    {id:3,title:'Kanbly',category:'JavaScript',tech:'JavaScript, IndexedDB',github:'https://github.com/muhammadbinimran/kanbly',demo:'',featured:false,status:'Draft'},
-  ],
-  skills: [
-    {id:1,name:'Laravel',group:'Primary',pct:95},
-    {id:2,name:'Golang',group:'Primary',pct:85},
-    {id:3,name:'JavaScript',group:'Primary',pct:88},
-    {id:4,name:'Docker',group:'Secondary',pct:78},
-  ],
-  experience: [
-    {id:1,role:'Senior Full Stack Developer',company:'Freelance / Contract',duration:'2023 — Present'},
-    {id:2,role:'Full Stack Web Developer',company:'Software Agency',duration:'2021 — 2023'},
-  ],
-  testimonials: [
-    {id:1,name:'Sarah Khan',company:'Nimbus Retail',rating:5,text:'Muhammad delivered exactly what we needed, on time and well documented.'},
-    {id:2,name:'David Chen',company:'Fleetwise Logistics',rating:5,text:'The Go service he built handles our load without breaking a sweat.'},
-  ],
-  blog: [
-    {id:1,title:'Structuring Laravel apps for teams that outgrow the defaults',category:'Laravel',status:'Published',date:'2026-07-12'},
-    {id:2,title:'Handling 10k concurrent connections without losing your mind',category:'Go',status:'Published',date:'2026-06-28'},
-    {id:3,title:"A deployment pipeline that doesn't wake you up at 2am",category:'DevOps',status:'Draft',date:'2026-06-10'},
-  ],
-  messages: [
-    {id:1,name:'Ayesha Raza',email:'ayesha@studio.io',message:'Hi Muhammad, we need a Laravel backend for our booking platform. Can we schedule a call this week?',date:'Jul 18, 2026',read:false},
-    {id:2,name:'Tom Becker',email:'tom@fleetwise.com',message:'Loved the Fleetpulse case study — do you take on Go microservice contracts?',date:'Jul 15, 2026',read:false},
-    {id:3,name:'Priya Nair',email:'priya@nimbus.co',message:'Following up on the invoice generator project, everything looks great so far.',date:'Jul 10, 2026',read:true},
-  ],
+  projects: [],
+  skills: [],
+  experience: [],
+  testimonials: [],
+  blog: [],
+  messages: [],
+  subscribers: [],
 };
-let idCounter = 1000;
 
 const CSRF = document.querySelector('meta[name="csrf-token"]') ? document.querySelector('meta[name="csrf-token"]').getAttribute('content') : '';
 
@@ -553,6 +544,14 @@ async function fetchEntityFromServer(entity){
     if(!res.ok) return null;
     const data = await res.json();
     return Array.isArray(data) ? data : null;
+  }catch(e){ return null; }
+}
+
+async function fetchObjectFromServer(url){
+  try{
+    const res = await fetch(url);
+    if(!res.ok) return null;
+    return await res.json();
   }catch(e){ return null; }
 }
 
@@ -629,13 +628,23 @@ const CONFIG = {
     columns:[
       {key:'name',header:'Client',render:r=>`<div class="cell-title">${r.name}</div><div class="cell-sub">${r.company}</div>`},
       {key:'rating',header:'Rating',render:r=>`<span class="stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span>`},
-      {key:'text',header:'Quote',render:r=>`<div style="max-width:280px;color:var(--text-muted);font-size:12.5px;">${r.text.slice(0,70)}${r.text.length>70?'…':''}</div>`},
+      {key:'text',header:'Quote',render:r=>`<div style="max-width:280px;color:var(--text-muted);font-size:12.5px;">${(r.text||'').slice(0,70)}${r.text&&r.text.length>70?'…':''}</div>`},
     ],
     fields:[
       {key:'name',label:'Client Name',type:'text',required:true},
       {key:'company',label:'Company',type:'text'},
       {key:'rating',label:'Rating (1-5)',type:'select',options:['5','4','3','2','1']},
       {key:'text',label:'Testimonial Text',type:'textarea'},
+    ]
+  },
+  subscribers: {
+    label:'Subscriber',
+    columns:[
+      {key:'email',header:'Email',render:r=>`<div class="cell-title">${r.email}</div>`},
+      {key:'created_at',header:'Subscribed',render:r=>`<span class="mono">${r.created_at ? new Date(r.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : ''}</span>`},
+    ],
+    fields:[
+      {key:'email',label:'Email Address',type:'email',required:true},
     ]
   },
   blog: {
@@ -691,15 +700,19 @@ function renderTable(entity){
 }
 
 function updateCounts(){
-  ['projects','skills','experience','testimonials','blog','messages'].forEach(e=>{
+  ['projects','skills','experience','testimonials','blog','messages','subscribers'].forEach(e=>{
     const el = document.getElementById('cnt'+e.charAt(0).toUpperCase()+e.slice(1));
     if(el) el.textContent = DB[e].length;
   });
   document.getElementById('kpiProjects').textContent = DB.projects.length;
+  document.getElementById('kpiSkills').textContent = DB.skills.length;
   document.getElementById('kpiBlog').textContent = DB.blog.length;
   document.getElementById('kpiMessages').textContent = DB.messages.length;
+  document.getElementById('kpiSubscribers').textContent = DB.subscribers.length;
+  document.getElementById('kpiExperience').textContent = DB.experience.length;
+  document.getElementById('kpiTestimonials').textContent = DB.testimonials.length;
   const unread = DB.messages.filter(m=>!m.read).length;
-  document.getElementById('kpiUnreadTrend').textContent = unread + ' new';
+  document.getElementById('kpiUnreadTrend').textContent = unread + ' unread';
 }
 
 function mediaPreviewHtml(val){
@@ -826,39 +839,68 @@ async function deleteEntity(entity, id){
 }
 
 /* ---------- MESSAGES ---------- */
+let openMessageId = null;
 function renderMessages(){
   const panel = document.getElementById('messagesPanel');
-  if(!DB.messages.length){ panel.innerHTML = '<div class="empty-state">No messages yet.</div>'; return; }
+  if(!DB.messages.length){
+    panel.innerHTML = '<div class="empty-state">No messages yet.</div>';
+    const recent = document.getElementById('recentMessagesList');
+    if(recent) recent.innerHTML = '<div class="empty-state" style="padding:30px 20px;">No messages yet.</div>';
+    return;
+  }
   panel.innerHTML = DB.messages.map(m=>`
-    <div class="msg-item" onclick="markRead(${m.id})">
-      <div class="msg-avatar">${m.name.split(' ').map(w=>w[0]).join('').slice(0,2)}</div>
+    <div class="msg-item ${m.id===openMessageId?'msg-open':''}" onclick="toggleMessage(${m.id})">
+      <div class="msg-avatar">${(m.name||'?').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}</div>
       <div class="msg-body">
-        <div class="msg-top"><span class="msg-name">${m.name} ${!m.read?'<span class=\"status-pill status-unread\" style=\"margin-left:6px;\">New</span>':''}</span><span class="msg-date">${m.date}</span></div>
-        <div class="msg-email">${m.email}</div>
+        <div class="msg-top"><span class="msg-name">${m.name} ${!m.read?'<span class="status-pill status-unread" style="margin-left:6px;">New</span>':''}</span><span class="msg-date">${m.date||''}</span></div>
+        <div class="msg-email">${m.email}${m.subject?' · '+m.subject:''}</div>
         <div class="msg-preview">${m.message}</div>
+        ${m.id===openMessageId?`<div class="msg-full">${m.message}</div>
+          <div style="display:flex;gap:8px;margin-top:12px;">
+            <a class="btn btn-ghost btn-sm" href="mailto:${m.email}?subject=Re: ${encodeURIComponent(m.subject||'Your message')}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16v16H4z"/><path d="M4 6l8 7 8-7"/></svg> Reply</a>
+            <button class="btn btn-danger btn-sm" onclick="event.stopPropagation();deleteEntity('messages', ${m.id})">Delete</button>
+          </div>`:''}
       </div>
-      <button class="btn btn-danger btn-icon" style="align-self:center;" onclick="event.stopPropagation();deleteEntity('messages', ${m.id})"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6"/></svg></button>
+      ${!m.read?`<button class="btn btn-ghost btn-sm" style="align-self:center;flex-shrink:0;" onclick="event.stopPropagation();markRead(${m.id})">Mark read</button>`:''}
     </div>`).join('');
   const recent = document.getElementById('recentMessagesList');
   if(recent) recent.innerHTML = DB.messages.slice(0,3).map(m=>`
     <div class="msg-item" style="padding:14px 20px;">
-      <div class="msg-avatar">${m.name.split(' ').map(w=>w[0]).join('').slice(0,2)}</div>
-      <div class="msg-body"><div class="msg-top"><span class="msg-name" style="font-size:13px;">${m.name}</span><span class="msg-date">${m.date}</span></div><div class="msg-preview">${m.message}</div></div>
-    </div>`).join('');
+      <div class="msg-avatar">${(m.name||'?').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}</div>
+      <div class="msg-body"><div class="msg-top"><span class="msg-name" style="font-size:13px;">${m.name}</span><span class="msg-date">${m.date||''}</span></div><div class="msg-preview">${m.message}</div></div>
+    </div>`).join('') || '<div class="empty-state" style="padding:30px 20px;">No messages yet.</div>';
 }
-function markRead(id){ const m = DB.messages.find(x=>x.id===id); if(m){ m.read = true; renderMessages(); updateCounts(); } }
+function toggleMessage(id){
+  openMessageId = (openMessageId===id) ? null : id;
+  const m = DB.messages.find(x=>x.id===id);
+  if(m && !m.read) markRead(id);
+  renderMessages();
+}
+async function markRead(id){
+  const m = DB.messages.find(x=>x.id===id);
+  if(!m || m.read) return;
+  m.read = true;
+  const ok = await saveEntityToServer('messages', {id, read:true});
+  if(!ok){ m.read = false; toast('Failed to mark as read', 'error'); }
+  renderMessages(); updateCounts();
+}
 
-/* ---------- MEDIA (demo, in-memory) ---------- */
-let mediaFiles = [
-  {name:'resume.pdf', size:'214 KB', type:'pdf'},
-  {name:'project-invoicely.png', size:'340 KB', type:'img'},
-];
+/* ---------- MEDIA (server-backed) ---------- */
+let mediaFiles = [];
 function renderMedia(){
-  document.getElementById('mediaGrid').innerHTML = mediaFiles.map(f=>`
+  const grid = document.getElementById('mediaGrid');
+  if(!mediaFiles.length){
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1;">No files uploaded yet. Drag files above to get started.</div>';
+    return;
+  }
+  grid.innerHTML = mediaFiles.map(f=>`
     <div class="media-item">
-      <div class="media-thumb">${f.type==='pdf' ? '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h16v16H4z"/><path d="M8 12h8M8 16h5"/></svg>' : '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>'}</div>
-      <div class="media-info"><div class="media-name">${f.name}</div><div class="media-size">${f.size}</div></div>
-      ${f.url?`<div style="padding:10px;display:flex;gap:8px;justify-content:flex-end;"><a href="${f.url}" target="_blank" class="btn btn-ghost btn-sm">View</a><button class="btn btn-danger btn-sm" onclick="deleteMedia('${encodeURIComponent(f.name)}')">Delete</button></div>`:''}
+      <div class="media-thumb">${f.name.match(/\.(png|jpe?g|gif|webp|svg|avif|bmp)(\?|$)/i) ? `<img src="${f.url}" alt="" style="width:100%;height:90px;object-fit:cover;">` : (f.name.toLowerCase().endsWith('.pdf') ? '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h16v16H4z"/><path d="M8 12h8M8 16h5"/></svg>' : '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>')}</div>
+      <div class="media-info"><div class="media-name" title="${f.name}">${f.name}</div><div class="media-size">${Math.round(f.size/1024)} KB</div></div>
+      <div style="padding:10px;display:flex;gap:8px;justify-content:flex-end;border-top:1px solid var(--border);">
+        <a href="${f.url}" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">View</a>
+        <button class="btn btn-danger btn-sm" onclick="deleteMedia('${encodeURIComponent(f.name)}')">Delete</button>
+      </div>
     </div>`).join('');
 }
 
@@ -868,10 +910,14 @@ async function deleteMedia(name){
     const decoded = decodeURIComponent(name);
     const res = await fetch(`/admin/api/media/${decoded}`, {method:'DELETE', headers:{'X-CSRF-TOKEN':CSRF}});
     if(!res.ok){ toast('Failed to delete','error'); return; }
-    mediaFiles = mediaFiles.filter(m=>m.name!==decoded);
-    renderMedia();
+    await loadMedia();
     toast('File deleted','error');
   }catch(e){ console.error(e); toast('Failed to delete','error'); }
+}
+async function loadMedia(){
+  const data = await fetchEntityFromServer('media');
+  if(Array.isArray(data)) mediaFiles = data;
+  renderMedia();
 }
 const uploadZone = document.getElementById('uploadZone');
 const fileInput = document.getElementById('fileInput');
@@ -884,43 +930,104 @@ if(fileInput) fileInput.addEventListener('change', async e=>{
   try{
     const res = await fetch('/admin/api/media', {method:'POST', headers:{'X-CSRF-TOKEN':CSRF}, body: fd});
     if(!res.ok){ toast('Upload failed','error'); return; }
-    const uploaded = await res.json();
-    // API returns array of uploaded file objects
-    uploaded.forEach(u=> mediaFiles.push({name:u.name,size:Math.round(u.size/1024)+' KB',type:u.name.endsWith('.pdf')?'pdf':'img', url:u.url}));
-    renderMedia();
+    await loadMedia();
     toast('File(s) uploaded');
   }catch(err){ console.error(err); toast('Upload failed','error'); }
 });
 
-/* ---------- CHART ---------- */
-function initChart(){
-  const ctx = document.getElementById('visitsChart');
-  new Chart(ctx, {
+/* ---------- CHART (real message data) ---------- */
+let visitsChart = null;
+function initChart(labels, counts){
+  const canvas = document.getElementById('visitsChart');
+  const empty = document.getElementById('chartEmpty');
+  const total = (counts||[]).reduce((a,b)=>a+b,0);
+  if(total===0){
+    if(empty) empty.style.display = 'block';
+    if(canvas) canvas.style.display = 'none';
+    if(visitsChart){ visitsChart.destroy(); visitsChart = null; }
+    return;
+  }
+  if(canvas) canvas.style.display = 'block';
+  if(empty) empty.style.display = 'none';
+  const gridColor = root.getAttribute('data-theme')==='light' ? 'rgba(0,0,0,.07)' : 'rgba(255,255,255,.06)';
+  const tickColor = root.getAttribute('data-theme')==='light' ? '#8B93A6' : '#8B93A6';
+  if(visitsChart) visitsChart.destroy();
+  visitsChart = new Chart(canvas, {
     type:'line',
-    data:{ labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
-      datasets:[{ label:'Visits', data:[120,145,132,168,190,175,210], borderColor:'#FF8A4C', backgroundColor:'rgba(255,138,76,.12)', tension:.4, fill:true, pointRadius:0, borderWidth:2 }]},
-    options:{ plugins:{legend:{display:false}}, scales:{ x:{grid:{display:false},ticks:{color:'#8B93A6',font:{family:'JetBrains Mono',size:10}}}, y:{grid:{color:'rgba(255,255,255,.06)'},ticks:{color:'#8B93A6',font:{family:'JetBrains Mono',size:10}}} } }
+    data:{ labels: labels||[], datasets:[{ label:'Messages', data: counts||[], borderColor:'#FF8A4C', backgroundColor:'rgba(255,138,76,.12)', tension:.4, fill:true, pointRadius:0, borderWidth:2 }]},
+    options:{ responsive:true, plugins:{legend:{display:false}}, scales:{ x:{grid:{display:false},ticks:{color:tickColor,font:{family:'JetBrains Mono',size:10}}}, y:{grid:{color:gridColor},ticks:{color:tickColor,font:{family:'JetBrains Mono',size:10},precision:0}} } }
   });
+}
+
+/* ---------- SETTINGS ---------- */
+function loadSettings(){
+  fetchObjectFromServer('/admin/api/settings').then(s=>{
+    if(!s || typeof s !== 'object') return;
+    const fields = ['site_name','site_title','tagline','contact_email','footer_bio','copyright','meta_title','meta_description','og_image','github','linkedin','twitter'];
+    fields.forEach(k=>{
+      const el = document.getElementById('set-'+k);
+      if(el && s[k] !== undefined && s[k] !== null) el.value = s[k];
+    });
+    const mm = document.getElementById('set-maintenance_mode');
+    if(mm) mm.checked = !!s.maintenance_mode;
+  });
+}
+async function saveSettings(){
+  const fields = ['site_name','site_title','tagline','contact_email','footer_bio','copyright','meta_title','meta_description','og_image','github','linkedin','twitter'];
+  const payload = {};
+  fields.forEach(k=>{
+    const el = document.getElementById('set-'+k);
+    if(el) payload[k] = el.value;
+  });
+  const mm = document.getElementById('set-maintenance_mode');
+  payload.maintenance_mode = mm ? mm.checked : false;
+  try{
+    const res = await fetch('/admin/api/settings', {method:'PUT', headers:{'Content-Type':'application/json','X-CSRF-TOKEN':CSRF}, body: JSON.stringify(payload)});
+    if(!res.ok) throw new Error('save failed');
+    toast('Settings saved');
+  }catch(e){ console.error(e); toast('Failed to save settings', 'error'); }
 }
 
 /* ---------- INIT ---------- */
 async function initDashboard(){
-  // attempt to load server data for each entity; fall back to in-memory demo data
-  await Promise.all(['projects','skills','experience','testimonials','blog','messages','media'].map(async e=>{
+  // load server data for each entity (no demo fallbacks)
+  await Promise.all(['projects','skills','experience','testimonials','blog','messages','subscribers','media'].map(async e=>{
     const data = await fetchEntityFromServer(e);
     if(Array.isArray(data)) {
-      if(e === 'media') {
-        mediaFiles = data.map(d=>({name:d.name,size:Math.round(d.size/1024)+' KB',type:d.name.endsWith('.pdf')?'pdf':'img', url:d.url}));
-      } else {
-        DB[e] = data;
-      }
+      if(e === 'media') mediaFiles = data;
+      else DB[e] = data;
     }
   }));
-  ['projects','skills','experience','testimonials','blog'].forEach(renderTable);
+  ['projects','skills','experience','testimonials','blog','subscribers'].forEach(renderTable);
   renderMessages();
   renderMedia();
   updateCounts();
-  initChart();
+  loadSettings();
+  // real dashboard stats
+  try{
+    const stats = await fetchObjectFromServer('/admin/api/stats');
+    if(stats && typeof stats === 'object'){
+      document.getElementById('kpiProjects').textContent = stats.projects;
+      document.getElementById('kpiSkills').textContent = stats.skills;
+      document.getElementById('kpiMessages').textContent = stats.messages;
+      document.getElementById('kpiSubscribers').textContent = stats.subscribers;
+      document.getElementById('kpiBlog').textContent = stats.blog;
+      document.getElementById('kpiExperience').textContent = stats.experience;
+      document.getElementById('kpiTestimonials').textContent = stats.testimonials;
+      document.getElementById('kpiMedia').textContent = stats.media;
+      document.getElementById('kpiFeaturedTrend').textContent = (stats.featured||0) + ' featured';
+      document.getElementById('kpiUnreadTrend').textContent = (stats.unread||0) + ' unread';
+      initChart(stats.chart && stats.chart.labels, stats.chart && stats.chart.counts);
+      const recent = document.getElementById('recentMessagesList');
+      if(recent && stats.recent_messages && stats.recent_messages.length){
+        recent.innerHTML = stats.recent_messages.map(m=>`
+          <div class="msg-item" style="padding:14px 20px;">
+            <div class="msg-avatar">${(m.name||'?').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}</div>
+            <div class="msg-body"><div class="msg-top"><span class="msg-name" style="font-size:13px;">${m.name}</span><span class="msg-date">${m.date||''}</span></div><div class="msg-preview">${m.message}</div></div>
+          </div>`).join('');
+      }
+    }
+  }catch(e){ console.error(e); }
 }
 
 // Auto-initialize when admin shell is visible (session-based)
